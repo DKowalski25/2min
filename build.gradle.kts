@@ -29,6 +29,8 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.38")
 
     implementation("org.liquibase:liquibase-core")
+
+    implementation ("io.github.cdimascio:dotenv-java:3.0.0")
 }
 
 tasks.withType<Test> {
