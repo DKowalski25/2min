@@ -79,7 +79,7 @@ public interface UserService {
      *
      * @return a list of all users with basic information (never {@code null}, may be empty)
      */
-    List<UserRequestDTO> getAllUsers();
+    List<UserResponseDTO> getAllUsers();
 
     /**
      * Updates an existing user's information.
