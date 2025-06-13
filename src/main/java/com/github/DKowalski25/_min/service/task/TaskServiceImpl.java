@@ -6,8 +6,10 @@ import com.github.DKowalski25._min.dto.task.TaskResponseDTO;
 import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 import com.github.DKowalski25._min.models.Task;
+import com.github.DKowalski25._min.models.TimeBlock;
 import com.github.DKowalski25._min.repository.task.TaskRepository;
 
+import com.github.DKowalski25._min.repository.timeblock.TimeBlockRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+    private final TimeBlockRepository timeBlockRepository;
 
     @Override
     public TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO) {
@@ -50,8 +53,10 @@ public class TaskServiceImpl implements TaskService {
         if (taskUpdateDTO.description() != null) task.setDescription(taskUpdateDTO.description());
         if (taskUpdateDTO.tag() != null) task.setTag(taskUpdateDTO.tag());
         if (taskUpdateDTO.isDone() != null) task.setDone(taskUpdateDTO.isDone());
-        if (taskUpdateDTO.timeBlockId() != null) {
-            throw new UnsupportedOperationException("timeBlockId update not yet implemented");
+        if (taskUpdateDTO.timeBlockType() != null) {
+            TimeBlock timeBlock = timeBlockRepository.findByType(taskUpdateDTO.timeBlockType())
+                    .orElseThrow(() -> new EntityNotFoundException("TimeBlock not found", taskUpdateDTO.timeBlockType()));
+            task.setTimeBlock(timeBlock);
         }
 
         Task saved = taskRepository.save(task);
