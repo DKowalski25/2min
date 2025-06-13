@@ -1,5 +1,6 @@
 package com.github.DKowalski25._min.repository.user;
 
+import com.github.DKowalski25._min.controller.user.UserController;
 import com.github.DKowalski25._min.models.User;
 
 import com.github.DKowalski25._min.service.user.UserService;
@@ -23,6 +24,7 @@ import java.util.Optional;
  * }</pre></p>
  *
  * @see UserService
+ * @see UserController
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
