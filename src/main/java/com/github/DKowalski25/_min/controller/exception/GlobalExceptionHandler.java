@@ -1,4 +1,4 @@
-package com.github.DKowalski25._min.controler.exception;
+package com.github.DKowalski25._min.controller.exception;
 
 import com.github.DKowalski25._min.dto.ErrorResponse;
 import com.github.DKowalski25._min.dto.ValidationErrorDTO;

@@ -1,11 +1,13 @@
 package com.github.DKowalski25._min.service.user;
 
+import com.github.DKowalski25._min.controller.user.UserController;
 import com.github.DKowalski25._min.dto.user.UserRequestDTO;
 import com.github.DKowalski25._min.dto.user.UserResponseDTO;
 import com.github.DKowalski25._min.dto.user.UserUpdateDTO;
 import com.github.DKowalski25._min.exceptions.BusinessValidationException;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 import com.github.DKowalski25._min.models.User;
+import com.github.DKowalski25._min.repository.user.UserRepository;
 
 
 import java.util.List;
@@ -28,6 +30,8 @@ import java.util.List;
  * }</pre>
  * </p>
  *
+ * @see UserController
+ * @see UserRepository
  * @see UserRequestDTO
  * @see UserResponseDTO
  * @see UserUpdateDTO
