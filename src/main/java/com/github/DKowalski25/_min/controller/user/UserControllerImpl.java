@@ -1,4 +1,4 @@
-package com.github.DKowalski25._min.controler.user;
+package com.github.DKowalski25._min.controller.user;
 
 import com.github.DKowalski25._min.dto.user.UserRequestDTO;
 import com.github.DKowalski25._min.dto.user.UserResponseDTO;

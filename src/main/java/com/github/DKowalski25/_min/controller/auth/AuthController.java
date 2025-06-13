@@ -1,4 +1,4 @@
-package com.github.DKowalski25._min.controler.auth;
+package com.github.DKowalski25._min.controller.auth;
 
 import com.github.DKowalski25._min.dto.auth.LoginRequest;
 import com.github.DKowalski25._min.dto.user.UserRequestDTO;
