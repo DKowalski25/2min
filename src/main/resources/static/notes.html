@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2minutes Notes</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>2minutes Notes</h1>
+        <button class="btn-error" id="logout-btn">Logout</button>
+    </div>
+
+    <div class="timer">
+        <span id="timer-display">00:00:00</span>
+        <div>
+            <button class="btn-primary" id="start-timer">Start</button>
+            <button class="btn-primary" id="pause-timer">Pause</button>
+            <button class="btn-primary" id="reset-timer">Reset</button>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <div class="tab" data-section="day">
+            <h2>Day</h2>
+            <div class="notes" id="day-notes"></div>
+            <button class="btn-primary add-btn">Add Note</button>
+        </div>
+        <div class="tab" data-section="week">
+            <h2>Week</h2>
+            <div class="notes" id="week-notes"></div>
+            <button class="btn-primary add-btn">Add Note</button>
+        </div>
+        <div class="tab" data-section="month">
+            <h2>Month</h2>
+            <div class="notes" id="month-notes"></div>
+            <button class="btn-primary add-btn">Add Note</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="note-modal">
+    <div class="modal-content">
+        <h3>New Note</h3>
+        <div class="form-group">
+            <input type="text" id="note-title" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <textarea id="note-text" rows="4" placeholder="Description"></textarea>
+        </div>
+        <button class="btn-primary" id="save-note-btn">Save</button>
+    </div>
+</div>
+
+<script type="module">
+    import { Timer } from '/js/timer.js';
+    import { logout } from '/js/auth.js';
+    import { getTasks, renderTasks, setupNotesEventListeners } from '/js/notes.js';
+
+    // Initialize timer
+    const timer = new Timer(document.getElementById('timer-display'));
+    document.getElementById('start-timer').addEventListener('click', () => timer.start());
+    document.getElementById('pause-timer').addEventListener('click', () => timer.pause());
+    document.getElementById('reset-timer').addEventListener('click', () => timer.reset());
+
+    // Authentication
+    document.getElementById('logout-btn').addEventListener('click', logout);
+
+    // Notes functionality
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!localStorage.getItem('jwt')) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      try {
+        const tasks = await getTasks();
+        renderTasks(tasks);
+        setupNotesEventListeners();
+      } catch (error) {
+        console.error('Failed to load tasks:', error);
+      }
+    });
+</script>
+</body>
+</html>
