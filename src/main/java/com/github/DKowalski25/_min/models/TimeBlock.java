@@ -18,6 +18,7 @@ public class TimeBlock {
     private int id;
 
     @Enumerated(EnumType.STRING)
+    @Column(unique = true)
     private TimeType type;
 
     @OneToMany(mappedBy = "timeBlock", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
