@@ -19,26 +19,32 @@ services:
       timeout: 5s
       retries: 5
 
-#  tomcat:
-#    image: tomcat:latest
-#    container_name: 2min-tomcat
-#    restart: always
-#    env_file:
-#      - .env
-#    environment:
-#      CATALINA_OPTS: "-DDB_URL=jdbc:postgresql://postgres:5432/${DB_NAME} -DDB_USER=${DB_USERNAME} -DDB_PASSWORD=${DB_PASSWORD}"
-#    volumes:
-#      - ./build/libs/PersonalFinancialTracker.war:/usr/local/tomcat/webapps/PersonalFinancialTracker.war
-#    ports:
-#      - "8080:8080"
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-size: "10m"
-#        max-file: "5"
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
+  backend:
+    build: .
+    image: 2min-backend
+    container_name: 2min-backend
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    image: nginx:alpine
+    container_name: 2min-frontend
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/main/resources/static:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
 
 volumes:
   postgres-data:
