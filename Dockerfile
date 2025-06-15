@@ -2,13 +2,15 @@
 FROM eclipse-temurin:17-jdk as builder
 WORKDIR /app
 COPY . .
-RUN ./gradlew clean build -x test  # Собираем JAR (пропускаем тесты)
+# Копируем .env файл
+COPY .env .
+RUN ./gradlew clean build -x test
 
 # Этап запуска
 FROM eclipse-temurin:17-jre
 WORKDIR /app
- # Копируем JAR
+# Копируем JAR и .env
 COPY --from=builder /app/build/libs/*.jar app.jar
+COPY --from=builder /app/.env .
 EXPOSE 8080
- # Запускаем встроенный сервер
 CMD ["java", "-jar", "app.jar"]
