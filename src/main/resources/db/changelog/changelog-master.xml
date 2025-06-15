@@ -5,5 +5,8 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.19.xsd">
 
-  <includeAll path="db/changelog/entities/" relativeToChangelogFile="true"/>
+    <include file="entities/user/v1__initial_user.xml" relativeToChangelogFile="true"/>
+    <include file="entities/timeblock/v1__initial_timeblock.xml" relativeToChangelogFile="true"/>
+    <include file="entities/task/v1__initial_task.xml" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>

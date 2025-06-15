@@ -4,6 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
     <changeSet id="v1__initial_tasks" author="Dkowalski25">
         <createTable tableName="tasks">
             <column name="id" type="BIGSERIAL" autoIncrement="true">
@@ -19,10 +20,16 @@
                 <constraints nullable="false"/>
             </column>
             <column name="is_done" type="BOOLEAN" defaultValue="false"/>
-            <column name="time_block_id" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="fk_task_timeblock"
-                    referencedTableName="time_block" referencedColumnNames="id"/>
-            </column>
+            <column name="time_block_type" type="VARCHAR(5)"/>
         </createTable>
+        
+        <addForeignKeyConstraint
+                baseTableName="tasks"
+                baseColumnNames="time_block_type"
+                constraintName="fk_task_time_block_type"
+                referencedTableName="time_blocks"
+                referencedColumnNames="type"
+                deferrable="true"
+                initiallyDeferred="true"/>
     </changeSet>
 </databaseChangeLog>

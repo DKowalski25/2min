@@ -8,4 +8,6 @@ spring:
       ddl-auto: update
     show-sql: true
   liquibase:
-    change-log: classpath:/db/changelog/changelog-master.xml
+    change-log: classpath:db/changelog/changelog-master.xml
+    parameters:
+      searchPath: classpath:db/changelog/

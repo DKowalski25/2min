@@ -29,5 +29,5 @@ public class User {
     private UserRole role;
 
     @Column(name = "is_blocked")
-    private boolean isBlocked;
+    private boolean blocked;
 }

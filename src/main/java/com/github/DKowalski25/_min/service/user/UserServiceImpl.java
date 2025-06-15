@@ -105,8 +105,8 @@ public class UserServiceImpl implements UserService {
             user.setPassword(updateDTO.password());
         }
 
-        if (updateDTO.isBlocked() != null) {
-            user.setBlocked(updateDTO.isBlocked());
+        if (updateDTO.blocked() != null) {
+            user.setBlocked(updateDTO.blocked());
         }
     }
 }

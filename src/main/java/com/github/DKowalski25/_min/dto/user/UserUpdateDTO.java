@@ -12,6 +12,6 @@ public record UserUpdateDTO (
         @Size(min = 3, max = 50, message = "Email must be between 3 and 50 characters")
         String email,
 
-        Boolean isBlocked
+        Boolean blocked
 )
 {}
