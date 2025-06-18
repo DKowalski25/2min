@@ -11,3 +11,24 @@ spring:
     change-log: classpath:db/changelog/changelog-master.xml
     parameters:
       searchPath: classpath:db/changelog/
+  logging:
+    level:
+      root: INFO
+      org:
+        hibernate.SQL: DEBUG
+        hibernate.type.descriptor.sql.BasicBinder: TRACE
+        springframework:
+          security: DEBUG
+          web: DEBUG
+          data: INFO
+          transaction: INFO
+      com:
+        github:
+          DKowalski25: DEBUG
+    file:
+      name: /app/logs/application.log
+      max-history: 7
+      max-size: 10MB
+    pattern:
+      file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+      console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
