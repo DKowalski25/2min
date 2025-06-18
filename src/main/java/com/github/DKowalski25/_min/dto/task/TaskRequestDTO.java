@@ -7,5 +7,5 @@ public record TaskRequestDTO(
     String title,
     String description,
     Tag tag,
-    TimeType timeBlock
+    Integer timeBlockId
 ) {}

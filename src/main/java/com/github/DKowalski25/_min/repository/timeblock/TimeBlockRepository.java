@@ -22,7 +22,7 @@ import java.util.Optional;
  * <p><strong>Usage example:</strong>
  * <pre>{@code
  * // In service layer:
- * TimeBlock timeBlock = timeBlockRepository.findByType(timeType)
+ * TimeBlock timeBlockType = timeBlockRepository.findByType(timeType)
  *     .orElseThrow(() -> new EntityNotFoundException("TimeBlock not found"));
  * }</pre></p>
  *

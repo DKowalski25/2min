@@ -27,16 +27,10 @@ public class Task {
     @Column(name = "is_done")
     private boolean done;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "time_block_type")  // Связь через тип (не через ID)
-    private TimeType timeBlockType;
-
     @ManyToOne
     @JoinColumn(
-            name = "time_block_type",       // Ссылаемся на type в TimeBlock
-            referencedColumnName = "type",  // Указываем, что связь по полю type
-            insertable = false,            // Запрещаем автоматическую вставку
-            updatable = false              // Запрещаем автоматическое обновление
+            name = "time_block_id",
+            nullable = false
     )
     private TimeBlock timeBlock;
 }
