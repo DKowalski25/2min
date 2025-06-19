@@ -6,20 +6,27 @@ import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
 import com.github.DKowalski25._min.service.task.TaskService;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/tasks")
 public class TaskControllerImpl implements TaskController {
     private final TaskService taskService;
 
     @Override
     public ResponseEntity<TaskResponseDTO> createTask(TaskRequestDTO taskRequestDTO) {
-        return ResponseEntity.ok(taskService.createTask(taskRequestDTO));
+        TaskResponseDTO createdTask = taskService.createTask(taskRequestDTO);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdTask);
     }
 
     @Override
