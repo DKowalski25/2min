@@ -34,7 +34,7 @@
                 referencedTableName="time_blocks"
                 referencedColumnNames="id"
                 constraintName="fk_tasks_time_blocks"
-                onDelete="RESTRICT"
+                onDelete="CASCADE"
                 onUpdate="CASCADE"/>
         <addForeignKeyConstraint
                 baseTableName="tasks"
