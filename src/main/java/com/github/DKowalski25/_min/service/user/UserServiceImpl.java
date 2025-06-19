@@ -67,11 +67,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(UserUpdateDTO userDTO) {
-        User existingUser = userRepository.findByUsername(userDTO.username())
+    public void updateUser(Integer id, UserUpdateDTO userDTO) {
+        User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        updateUserFields(existingUser, userDTO);
+        userMapper.updateUserFromDto(userDTO, existingUser);
         userRepository.save(existingUser);
     }
 
@@ -90,23 +90,6 @@ public class UserServiceImpl implements UserService {
 
         if (userRepository.existsByUsername(username)) {
             throw new BusinessValidationException("User already exists");
-        }
-    }
-
-    private void updateUserFields(User user, UserUpdateDTO updateDTO) {
-        if (updateDTO.username() != null && !updateDTO.username().equals(user.getUsername())) {
-            if (userRepository.existsByUsername(updateDTO.username())) {
-                throw new BusinessValidationException("Username already taken");
-            }
-            user.setUsername(updateDTO.username());
-        }
-
-        if (updateDTO.password() != null) {
-            user.setPassword(updateDTO.password());
-        }
-
-        if (updateDTO.blocked() != null) {
-            user.setBlocked(updateDTO.blocked());
         }
     }
 }
