@@ -1,6 +1,5 @@
 package com.github.DKowalski25._min.dto.user;
 
-import com.github.DKowalski25._min.models.UserRole;
 import jakarta.validation.constraints.*;
 
 public record UserRequestDTO (
@@ -14,7 +13,5 @@ public record UserRequestDTO (
 
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Invalid email format")
-    String email,
-
-    UserRole role
+    String email
 ) {}
