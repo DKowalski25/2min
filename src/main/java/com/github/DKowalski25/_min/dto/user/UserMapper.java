@@ -1,8 +1,8 @@
 package com.github.DKowalski25._min.dto.user;
 
 import com.github.DKowalski25._min.models.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -16,4 +16,7 @@ public interface UserMapper {
 
     @Mapping(target = "password", ignore = true)
     UserRequestDTO toRequest(User user);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateUserFromDto(UserUpdateDTO dto, @MappingTarget User user);
 }
