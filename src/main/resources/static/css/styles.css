@@ -1,10 +1,11 @@
 :root {
   --bg: #f7f9fc;
   --primary: #4f46e5;
-  --accent: #64748b;
-  --shadow: rgba(0, 0, 0, 0.1);
+  --secondary: #64748b;
   --error: #ef4444;
   --text: #1e293b;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --note-bg: #ffffff;
 }
 
 * {
@@ -20,12 +21,11 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Header */
 .header {
   display: flex;
   justify-content: space-between;
@@ -33,88 +33,56 @@ body {
   margin-bottom: 20px;
 }
 
-/* Forms */
-.form-group {
-  margin-bottom: 1rem;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  margin-top: 0.5rem;
-}
-
-button {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.btn-primary {
-  background: var(--primary);
-  color: white;
-}
-
-.btn-error {
-  background: var(--error);
-  color: white;
-}
-
-/* Auth pages */
-.auth-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px var(--shadow);
-}
-
-/* Notes page */
 .timer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px var(--shadow);
+  background: var(--note-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow);
   margin-bottom: 20px;
 }
 
 .tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
 }
 
 .tab {
-  flex: 1;
-  background: white;
-  padding: 16px;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px var(--shadow);
+  background: var(--note-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow);
 }
 
 .notes {
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+}
+
+.note {
+  background: var(--note-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px var(--shadow);
+  position: relative;
+}
+
+.note-actions {
+  display: flex;
   gap: 10px;
   margin-top: 10px;
 }
 
-.note {
-  background: #e2e8f0;
-  padding: 10px;
-  border-radius: 10px;
-  position: relative;
+.note-actions button {
+  padding: 5px 10px;
+  font-size: 14px;
 }
 
-/* Modal */
 .modal {
   position: fixed;
   top: 0;
@@ -122,28 +90,83 @@ button {
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.5);
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
-  visibility: hidden;
+  z-index: 1000;
 }
 
 .modal.show {
-  visibility: visible;
+  display: flex;
 }
 
 .modal-content {
-  background: white;
+  background: var(--note-bg);
   padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px var(--shadow);
+  border-radius: 8px;
   width: 90%;
-  max-width: 400px;
+  max-width: 500px;
 }
 
-/* Responsive */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-error {
+  background: var(--error);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .tabs {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 }
