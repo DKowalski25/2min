@@ -20,7 +20,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="is_done" type="BOOLEAN" defaultValue="false"/>
-            <column name="time_block_id" type="INTEGER">
+            <column name="time_block_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column name="user_id" type="BIGINT">
