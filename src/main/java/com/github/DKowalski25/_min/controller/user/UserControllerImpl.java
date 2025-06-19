@@ -5,25 +5,24 @@ import com.github.DKowalski25._min.dto.user.UserResponseDTO;
 import com.github.DKowalski25._min.dto.user.UserUpdateDTO;
 import com.github.DKowalski25._min.service.user.UserService;
 
-import jakarta.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
 @RequiredArgsConstructor
+@RequestMapping("/api/users")
 public class UserControllerImpl implements UserController {
-
     private final UserService userService;
 
     @Override
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody @Valid UserRequestDTO userDto) {
+    public ResponseEntity<UserResponseDTO> createUser(UserRequestDTO userDto) {
         UserResponseDTO createdUser = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
@@ -55,7 +54,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public ResponseEntity<Void> updateUser(Integer id, UserUpdateDTO userDto) {
-        userService.updateUser(userDto);
+        userService.updateUser(id, userDto);
         return ResponseEntity.noContent().build();
 
     }
