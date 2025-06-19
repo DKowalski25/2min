@@ -29,7 +29,6 @@ import java.util.List;
  * @see TaskResponseDTO
  * @see TaskUpdateDTO
  */
-@RequestMapping("/api/tasks")
 public interface TaskController {
 
     /**
