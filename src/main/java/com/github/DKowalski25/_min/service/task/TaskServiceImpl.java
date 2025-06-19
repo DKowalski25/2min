@@ -48,16 +48,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found", id));
 
-        if (taskUpdateDTO.title() != null) task.setTitle(taskUpdateDTO.title());
-        if (taskUpdateDTO.description() != null) task.setDescription(taskUpdateDTO.description());
-        if (taskUpdateDTO.tag() != null) task.setTag(taskUpdateDTO.tag());
-        if (taskUpdateDTO.done() != null) task.setDone(taskUpdateDTO.done());
-        if (taskUpdateDTO.timeBlockType() != null) {
-            TimeBlock timeBlock = timeBlockRepository.findByType(taskUpdateDTO.timeBlockType())
-                    .orElseThrow(() -> new EntityNotFoundException("TimeBlock not found", taskUpdateDTO.timeBlockType()));
-            task.setTimeBlock(timeBlock);
-        }
-
+        taskMapper.updateFromDto(taskUpdateDTO, task);
         Task saved = taskRepository.save(task);
         return taskMapper.toResponse(saved);
     }
