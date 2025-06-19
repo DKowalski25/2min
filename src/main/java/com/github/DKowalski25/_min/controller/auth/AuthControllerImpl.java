@@ -30,12 +30,20 @@ public class AuthControllerImpl implements AuthController {
 
     @Override
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.username(), request.password())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtUtil.generateToken(request.username());
-        return ResponseEntity.ok(token);
+        try {
+            System.out.println("Attempting login for: " + request.username());
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.username(), request.password())
+            );
+            System.out.println("Authentication success for: " + request.username());
+            String token = jwtUtil.generateToken(request.username());
+            System.out.println("Generated token for: " + request.username());
+            return ResponseEntity.ok(token);
+        } catch (Exception e) {
+            System.err.println("Login failed for: " + request.username());
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Authentication failed");
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.github.DKowalski25._min.controller.task;
 
-import com.github.DKowalski25._min.dto.task.TaskMapper;
 import com.github.DKowalski25._min.dto.task.TaskRequestDTO;
 import com.github.DKowalski25._min.dto.task.TaskResponseDTO;
 import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskControllerImpl implements TaskController {
     private final TaskService taskService;
-    private final TaskMapper taskMapper;
 
     @Override
     public ResponseEntity<TaskResponseDTO> createTask(TaskRequestDTO taskRequestDTO) {

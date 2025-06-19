@@ -20,16 +20,18 @@
                 <constraints nullable="false"/>
             </column>
             <column name="is_done" type="BOOLEAN" defaultValue="false"/>
-            <column name="time_block_type" type="VARCHAR(5)"/>
+            <column name="time_block_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
-        
+
         <addForeignKeyConstraint
                 baseTableName="tasks"
-                baseColumnNames="time_block_type"
-                constraintName="fk_task_time_block_type"
+                baseColumnNames="time_block_id"
                 referencedTableName="time_blocks"
-                referencedColumnNames="type"
-                deferrable="true"
-                initiallyDeferred="true"/>
+                referencedColumnNames="id"
+                constraintName="fk_tasks_time_blocks"
+                onDelete="RESTRICT"
+                onUpdate="CASCADE"/>
     </changeSet>
 </databaseChangeLog>

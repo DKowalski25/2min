@@ -9,7 +9,7 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>2minutes Notes</h1>
+        <h1>2min</h1>
         <button class="btn-error" id="logout-btn">Logout</button>
     </div>
 
@@ -23,17 +23,17 @@
     </div>
 
     <div class="tabs">
-        <div class="tab" data-section="day">
+        <div class="tab" data-section="DAY">
             <h2>Day</h2>
             <div class="notes" id="day-notes"></div>
             <button class="btn-primary add-btn">Add Note</button>
         </div>
-        <div class="tab" data-section="week">
+        <div class="tab" data-section="WEEK">
             <h2>Week</h2>
             <div class="notes" id="week-notes"></div>
             <button class="btn-primary add-btn">Add Note</button>
         </div>
-        <div class="tab" data-section="month">
+        <div class="tab" data-section="MONTH">
             <h2>Month</h2>
             <div class="notes" id="month-notes"></div>
             <button class="btn-primary add-btn">Add Note</button>
@@ -50,39 +50,19 @@
         <div class="form-group">
             <textarea id="note-text" rows="4" placeholder="Description"></textarea>
         </div>
-        <button class="btn-primary" id="save-note-btn">Save</button>
+        <div class="form-group">
+            <select id="note-tag">
+                <option value="MAIN">Main</option>
+                <option value="EXTRA">Extra</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button class="btn-primary" id="save-note-btn">Save</button>
+            <button class="btn-secondary" id="cancel-note-btn">Cancel</button>
+        </div>
     </div>
 </div>
 
-<script type="module">
-    import { Timer } from '/js/timer.js';
-    import { logout } from '/js/auth.js';
-    import { getTasks, renderTasks, setupNotesEventListeners } from '/js/notes.js';
-
-    // Initialize timer
-    const timer = new Timer(document.getElementById('timer-display'));
-    document.getElementById('start-timer').addEventListener('click', () => timer.start());
-    document.getElementById('pause-timer').addEventListener('click', () => timer.pause());
-    document.getElementById('reset-timer').addEventListener('click', () => timer.reset());
-
-    // Authentication
-    document.getElementById('logout-btn').addEventListener('click', logout);
-
-    // Notes functionality
-    document.addEventListener('DOMContentLoaded', async () => {
-      if (!localStorage.getItem('jwt')) {
-        window.location.href = '/login.html';
-        return;
-      }
-
-      try {
-        const tasks = await getTasks();
-        renderTasks(tasks);
-        setupNotesEventListeners();
-      } catch (error) {
-        console.error('Failed to load tasks:', error);
-      }
-    });
-</script>
+<script type="module" src="/js/notes.js"></script>
 </body>
 </html>
