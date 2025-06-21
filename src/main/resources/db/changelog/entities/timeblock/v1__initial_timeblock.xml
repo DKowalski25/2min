@@ -26,6 +26,6 @@
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
 
-        <addUniqueConstraint tableName="time" columnNames="user_id, type" constraintName="uc_user_type_unique"/>
+        <addUniqueConstraint tableName="time_blocks" columnNames="user_id, type" constraintName="uc_user_type_unique"/>
     </changeSet>
 </databaseChangeLog>
