@@ -5,6 +5,7 @@ import com.github.DKowalski25._min.dto.auth.LoginRequest;
 import com.github.DKowalski25._min.dto.user.UserMapper;
 import com.github.DKowalski25._min.dto.user.UserRequestDTO;
 import com.github.DKowalski25._min.dto.user.UserResponseDTO;
+import com.github.DKowalski25._min.models.CustomUserDetails;
 import com.github.DKowalski25._min.models.User;
 import com.github.DKowalski25._min.service.user.UserService;
 
@@ -34,11 +35,11 @@ public class AuthControllerImpl implements AuthController {
     @Override
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
         try {
-            User user = userMapper.toEntity(userService.getUserByUsername(request.username()));
-
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.username(), request.password())
             );
+
+            User user = ((CustomUserDetails) authentication.getPrincipal()).getUser();
 
             String token = jwtUtil.generateToken(user);
 
