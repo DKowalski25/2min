@@ -63,11 +63,12 @@ public interface TaskService {
      *
      * @param id the identifier of the task to update
      * @param taskUpdateDTO the task update data (must not be {@code null})
+     * @param userId the ID of the user
      * @return the updated task response DTO
      * @throws EntityNotFoundException if no task exists with the given ID
      * @throws IllegalArgumentException if the update data is invalid
      */
-    TaskResponseDTO updateTask(int id, TaskUpdateDTO taskUpdateDTO);
+    TaskResponseDTO updateTask(int id, TaskUpdateDTO taskUpdateDTO, int userId);
 
     /**
      * Deletes a task by its identifier.
