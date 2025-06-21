@@ -30,7 +30,7 @@ public class TaskControllerImpl implements TaskController {
     }
 
     @Override
-    public ResponseEntity<TaskResponseDTO> getTaskById(int id) {
+    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable int id) {
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
@@ -40,12 +40,12 @@ public class TaskControllerImpl implements TaskController {
     }
 
     @Override
-    public ResponseEntity<TaskResponseDTO> updateTask(int id, TaskUpdateDTO taskRequestDTO) {
+    public ResponseEntity<TaskResponseDTO> updateTask(@PathVariable int id, @RequestBody TaskUpdateDTO taskRequestDTO) {
         return ResponseEntity.ok(taskService.updateTask(id, taskRequestDTO));
     }
 
     @Override
-    public ResponseEntity<Void> deleteTask(int id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable int id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
