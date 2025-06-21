@@ -2,29 +2,49 @@ package com.github.DKowalski25._min.dto.task;
 
 import com.github.DKowalski25._min.models.Task;
 
-
 import com.github.DKowalski25._min.models.TimeBlock;
+import com.github.DKowalski25._min.models.User;
+
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface TaskMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "done", constant = "false")
-    @Mapping(target = "timeBlock", source = "timeBlockId", qualifiedByName = "mapTimeBlock")
-    Task toEntity(TaskRequestDTO dto);
+    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
+    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
+    Task toEntity(TaskRequestDTO dto, int userId);
 
-    @Named("mapTimeBlock")
-    default TimeBlock mapTimeBlock(int timeBlockId) {
-        TimeBlock timeBlock = new TimeBlock();
-        timeBlock.setId(timeBlockId);
-        return timeBlock;
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "done", constant = "false")
+    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
+    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
+    Task toEntityWithUser(TaskRequestDTO dto, int userId);
 
     @Mapping(target = "timeBlockType", source = "timeBlock.type")
+    @Mapping(target = "userId", source = "user.id")
     TaskResponseDTO toResponse(Task task);
-//
-//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-//    @Mapping(target = "timeBlockType", source = "timeBlockType")
-//    void updateFromDto(TaskUpdateDTO dto, @MappingTarget Task task);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "timeBlock", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    void updateFromDto(TaskUpdateDTO dto, @MappingTarget Task task);
+
+
+    @Named("mapUser")
+    default User mapUser(int userId) {
+        User user = new User();
+        user.setId(userId);
+        return user;
+    }
+
+    @Named("mapTimeBlock")
+    default TimeBlock mapTimeBlock(Integer timeBlockId) {
+        TimeBlock block = new TimeBlock();
+        block.setId(timeBlockId);
+        return block;
+    }
 }

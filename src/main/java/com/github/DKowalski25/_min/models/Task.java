@@ -33,4 +33,11 @@ public class Task {
             nullable = false
     )
     private TimeBlock timeBlock;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "user_id",
+            nullable = false
+    )
+    private User user;
 }

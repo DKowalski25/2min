@@ -17,8 +17,15 @@ public class TimeBlock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "user_id",
+            nullable = false
+    )
+    private User user;
+
     @Enumerated(EnumType.STRING)
-    @Column(unique = true)
+    @Column(name = "type")
     private TimeType type;
 
     @OneToMany(mappedBy = "timeBlock", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

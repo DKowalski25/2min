@@ -9,5 +9,6 @@ public record TaskResponseDTO(
         String description,
         Tag tag,
         boolean done,
-        TimeType timeBlockType
+        TimeType timeBlockType,
+        Integer userId
 ) {}

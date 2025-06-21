@@ -3,15 +3,12 @@ package com.github.DKowalski25._min.controller.user;
 import com.github.DKowalski25._min.dto.user.UserRequestDTO;
 import com.github.DKowalski25._min.dto.user.UserResponseDTO;
 import com.github.DKowalski25._min.dto.user.UserUpdateDTO;
-
 import com.github.DKowalski25._min.repository.user.UserRepository;
+
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,7 +40,7 @@ public interface UserController {
      *
      */
     @PostMapping
-    ResponseEntity<UserResponseDTO> createUser(UserRequestDTO userDto);
+    ResponseEntity<UserResponseDTO> createUser(@RequestBody @Valid UserRequestDTO userDto);
 
     /**
      * Retrieves a user by ID.
@@ -53,7 +50,7 @@ public interface UserController {
      *         or status 404 (Not Found) if user doesn't exist
      */
     @GetMapping("/{id}")
-    ResponseEntity<UserResponseDTO> getUserById(Integer id);
+    ResponseEntity<UserResponseDTO> getUserById(@PathVariable Integer id);
 
     /**
      * Retrieves a user by username.
@@ -63,7 +60,7 @@ public interface UserController {
      *         or status 404 (Not Found) if user doesn't exist
      */
     @GetMapping("/username/{username}")
-    ResponseEntity<UserResponseDTO> getUserByUsername(String username);
+    ResponseEntity<UserResponseDTO> getUserByUsername(@PathVariable String username);
 
     /**
      * Retrieves a user by email.
@@ -73,7 +70,7 @@ public interface UserController {
      *         or status 404 (Not Found) if user doesn't exist
      */
     @GetMapping("/email/{email}")
-    ResponseEntity<UserResponseDTO> getUserByEmail(String email);
+    ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable String email);
 
     /**
      * Retrieves all users.
@@ -92,8 +89,8 @@ public interface UserController {
      * @return {@link ResponseEntity} with HTTP status 204 (No Content) if successful,
      *         or status 404 (Not Found) if user doesn't exist
      */
-    @PutMapping
-    ResponseEntity<Void> updateUser(Integer id, UserUpdateDTO userDto);
+    @PatchMapping("/{id}")
+    ResponseEntity<Void> updateUser(@PathVariable Integer id, @RequestBody @Valid UserUpdateDTO userDto);
 
     /**
      * Deletes a user by ID.
@@ -103,6 +100,5 @@ public interface UserController {
      *         or status 404 (Not Found) if user doesn't exist
      */
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteUser(Integer id);
-
+    ResponseEntity<Void> deleteUser(@PathVariable Integer id);
 }

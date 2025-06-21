@@ -20,7 +20,10 @@
                 <constraints nullable="false"/>
             </column>
             <column name="is_done" type="BOOLEAN" defaultValue="false"/>
-            <column name="time_block_id" type="INTEGER">
+            <column name="time_block_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -31,7 +34,15 @@
                 referencedTableName="time_blocks"
                 referencedColumnNames="id"
                 constraintName="fk_tasks_time_blocks"
-                onDelete="RESTRICT"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+        <addForeignKeyConstraint
+                baseTableName="tasks"
+                baseColumnNames="user_id"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                constraintName="fk_tasks_users"
+                onDelete="CASCADE"
                 onUpdate="CASCADE"/>
     </changeSet>
 </databaseChangeLog>
