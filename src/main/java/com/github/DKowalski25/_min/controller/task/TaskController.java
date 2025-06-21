@@ -61,7 +61,9 @@ public interface TaskController {
      *         or empty list if no tasks exist
      */
     @GetMapping
-    ResponseEntity<List<TaskResponseDTO>> getAllTasks();
+    ResponseEntity<List<TaskResponseDTO>> getAllTasks(
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    );
 
     /**
      * Updates an existing task.

@@ -41,8 +41,10 @@ public class TaskControllerImpl implements TaskController {
     }
 
     @Override
-    public ResponseEntity<List<TaskResponseDTO>> getAllTasks() {
-        return ResponseEntity.ok(taskService.getAllTasks());
+    public ResponseEntity<List<TaskResponseDTO>> getAllTasks(
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        return ResponseEntity.ok(taskService.getAllTasks(userDetails.getId()));
     }
 
     @Override
