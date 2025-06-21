@@ -16,6 +16,12 @@ public interface TaskMapper {
     @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
     Task toEntity(TaskRequestDTO dto);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "done", constant = "false")
+    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
+    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
+    Task toEntityWithUser(TaskRequestDTO dto, int userId);
+
     @Mapping(target = "timeBlockType", source = "timeBlock.type")
     @Mapping(target = "userId", source = "user.id")
     TaskResponseDTO toResponse(Task task);
