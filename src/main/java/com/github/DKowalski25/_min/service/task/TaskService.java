@@ -73,7 +73,8 @@ public interface TaskService {
      * Deletes a task by its identifier.
      *
      * @param id the identifier of the task to delete
+     * @param userId the ID of the user
      * @throws EntityNotFoundException if no task exists with the given ID
      */
-    void deleteTask(int id);
+    void deleteTask(int id, int userId);
 }
