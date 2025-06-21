@@ -6,10 +6,10 @@ import com.github.DKowalski25._min.dto.task.TaskResponseDTO;
 import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 import com.github.DKowalski25._min.models.Task;
-import com.github.DKowalski25._min.models.TimeBlock;
 import com.github.DKowalski25._min.repository.task.TaskRepository;
 
 import com.github.DKowalski25._min.repository.timeblock.TimeBlockRepository;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -24,9 +24,10 @@ public class TaskServiceImpl implements TaskService {
     private final TimeBlockRepository timeBlockRepository;
 
     @Override
-    public TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO) {
-        Task task = taskMapper.toEntity(taskRequestDTO);
-        return taskMapper.toResponse(taskRepository.save(task));
+    public TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO, int userId) {
+        Task enrichedTask = taskMapper.toEntityWithUser(taskRequestDTO, userId);
+        Task task = taskRepository.save(enrichedTask);
+        return taskMapper.toResponse(task);
     }
 
     @Override

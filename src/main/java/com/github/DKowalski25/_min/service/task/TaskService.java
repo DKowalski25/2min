@@ -36,10 +36,11 @@ public interface TaskService {
      * Creates a new task based on the provided request data.
      *
      * @param taskRequestDTO the task creation data (must not be {@code null})
+     * @param userId the ID of the user creating the task
      * @return the created task response DTO
      * @throws IllegalArgumentException if the request data is invalid
      */
-    TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO);
+    TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO, int userId);
 
     /**
      * Retrieves a task by its unique identifier.
