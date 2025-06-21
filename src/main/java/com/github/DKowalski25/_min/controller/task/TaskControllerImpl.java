@@ -48,8 +48,11 @@ public class TaskControllerImpl implements TaskController {
     }
 
     @Override
-    public ResponseEntity<TaskResponseDTO> updateTask(@PathVariable int id, @RequestBody TaskUpdateDTO taskRequestDTO) {
-        return ResponseEntity.ok(taskService.updateTask(id, taskRequestDTO));
+    public ResponseEntity<TaskResponseDTO> updateTask(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable int id,
+            @RequestBody TaskUpdateDTO taskRequestDTO) {
+        return ResponseEntity.ok(taskService.updateTask(id, taskRequestDTO, userDetails.getId()));
     }
 
     @Override

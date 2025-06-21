@@ -74,7 +74,10 @@ public interface TaskController {
      *         or status 404 (Not Found) if task doesn't exist
      */
     @PatchMapping("/{id}")
-    ResponseEntity<TaskResponseDTO> updateTask(@PathVariable int id, @RequestBody TaskUpdateDTO taskRequestDTO);
+    ResponseEntity<TaskResponseDTO> updateTask(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable int id,
+            @RequestBody TaskUpdateDTO taskRequestDTO);
 
     /**
      * Deletes a task by ID.
