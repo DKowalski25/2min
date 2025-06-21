@@ -25,7 +25,7 @@ public class TimeBlock {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(unique = true)
+    @Column(name = "type")
     private TimeType type;
 
     @OneToMany(mappedBy = "timeBlock", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
