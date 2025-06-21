@@ -54,9 +54,10 @@ public interface TaskService {
     /**
      * Retrieves all available tasks.
      *
+     * @param userId the ID of the user
      * @return a list of task response DTOs (possibly empty)
      */
-    List<TaskResponseDTO> getAllTasks();
+    List<TaskResponseDTO> getAllTasks(int userId);
 
     /**
      * Updates an existing task with the provided data.
