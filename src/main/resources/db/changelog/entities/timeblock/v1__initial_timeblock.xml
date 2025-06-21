@@ -13,6 +13,19 @@
             <column name="type" type="VARCHAR(5)">
                 <constraints nullable="false"/>
             </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+
+        <addForeignKeyConstraint baseTableName="time_blocks"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_time_blocks_users"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <addUniqueConstraint tableName="time_blocks" columnNames="user_id, type" constraintName="uc_user_type_unique"/>
     </changeSet>
 </databaseChangeLog>

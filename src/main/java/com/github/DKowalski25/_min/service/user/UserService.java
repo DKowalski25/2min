@@ -93,7 +93,7 @@ public interface UserService {
      * @throws EntityNotFoundException if no user exists to update
      * @throws BusinessValidationException if new username or email conflicts with existing users
      */
-    void updateUser(UserUpdateDTO userDTO);
+    void updateUser(Integer id, UserUpdateDTO userDTO);
 
     /**
      * Deletes a user by their identifier.

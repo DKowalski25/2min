@@ -4,9 +4,11 @@ import com.github.DKowalski25._min.dto.task.TaskRequestDTO;
 import com.github.DKowalski25._min.dto.task.TaskResponseDTO;
 import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
 
+import com.github.DKowalski25._min.models.CustomUserDetails;
 import com.github.DKowalski25._min.repository.task.TaskRepository;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +31,6 @@ import java.util.List;
  * @see TaskResponseDTO
  * @see TaskUpdateDTO
  */
-@RequestMapping("/api/tasks")
 public interface TaskController {
 
     /**
@@ -39,7 +40,9 @@ public interface TaskController {
      * @return {@link ResponseEntity} with created task data and HTTP status 201 (Created)
      */
     @PostMapping
-    ResponseEntity<TaskResponseDTO> createTask(@RequestBody TaskRequestDTO taskRequestDTO);
+    ResponseEntity<TaskResponseDTO> createTask(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody TaskRequestDTO taskRequestDTO);
 
     /**
      * Retrieves a task by ID.
@@ -58,7 +61,9 @@ public interface TaskController {
      *         or empty list if no tasks exist
      */
     @GetMapping
-    ResponseEntity<List<TaskResponseDTO>> getAllTasks();
+    ResponseEntity<List<TaskResponseDTO>> getAllTasks(
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    );
 
     /**
      * Updates an existing task.
@@ -69,7 +74,10 @@ public interface TaskController {
      *         or status 404 (Not Found) if task doesn't exist
      */
     @PatchMapping("/{id}")
-    ResponseEntity<TaskResponseDTO> updateTask(@PathVariable int id, @RequestBody TaskUpdateDTO taskRequestDTO);
+    ResponseEntity<TaskResponseDTO> updateTask(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable int id,
+            @RequestBody TaskUpdateDTO taskRequestDTO);
 
     /**
      * Deletes a task by ID.
@@ -79,5 +87,7 @@ public interface TaskController {
      *         or status 404 (Not Found) if task doesn't exist
      */
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteTask(@PathVariable int id);
+    ResponseEntity<Void> deleteTask(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable int id);
 }

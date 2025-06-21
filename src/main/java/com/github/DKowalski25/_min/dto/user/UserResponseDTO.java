@@ -7,5 +7,5 @@ public record UserResponseDTO (
     String username,
     String email,
     UserRole role,
-    boolean isBlocked
+    boolean blocked
 ) {}

@@ -25,9 +25,19 @@ public class Task {
     private Tag tag;
 
     @Column(name = "is_done")
-    private boolean isDone;
+    private boolean done;
 
     @ManyToOne
-    @JoinColumn(name = "time_block_id")
+    @JoinColumn(
+            name = "time_block_id",
+            nullable = false
+    )
     private TimeBlock timeBlock;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "user_id",
+            nullable = false
+    )
+    private User user;
 }

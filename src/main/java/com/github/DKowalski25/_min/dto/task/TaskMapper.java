@@ -1,24 +1,48 @@
 package com.github.DKowalski25._min.dto.task;
 
 import com.github.DKowalski25._min.models.Task;
+
 import com.github.DKowalski25._min.models.TimeBlock;
+import com.github.DKowalski25._min.models.User;
 
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface TaskMapper {
 
-    Task toEntity(TaskRequestDTO taskRequestDTO);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "done", constant = "false")
+    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
+    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
+    Task toEntity(TaskRequestDTO dto, int userId);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "done", constant = "false")
+    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
+    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
+    Task toEntityWithUser(TaskRequestDTO dto, int userId);
+
+    @Mapping(target = "timeBlockType", source = "timeBlock.type")
+    @Mapping(target = "userId", source = "user.id")
     TaskResponseDTO toResponse(Task task);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "timeBlock", source = "timeBlockId", qualifiedByName = "mapToTimeBlock")
-    void updateTaskFromDto(TaskUpdateDTO dto, @MappingTarget Task task);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "timeBlock", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    void updateFromDto(TaskUpdateDTO dto, @MappingTarget Task task);
 
-    @Named("mapToTimeBlock")
-    default TimeBlock mapToTimeBlock(Integer timeBlockId) {
-        if (timeBlockId == null) return null;
+
+    @Named("mapUser")
+    default User mapUser(int userId) {
+        User user = new User();
+        user.setId(userId);
+        return user;
+    }
+
+    @Named("mapTimeBlock")
+    default TimeBlock mapTimeBlock(Integer timeBlockId) {
         TimeBlock block = new TimeBlock();
         block.setId(timeBlockId);
         return block;

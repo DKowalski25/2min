@@ -8,11 +8,14 @@ import com.github.DKowalski25._min.exceptions.BusinessValidationException;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 import com.github.DKowalski25._min.models.User;
 import com.github.DKowalski25._min.repository.user.UserRepository;
+import com.github.DKowalski25._min.service.timeblock.TimeBlockService;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -24,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final TimeBlockService timeBlockService;
 
     @Override
     @Transactional
@@ -33,6 +37,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.toEntity(userDTO);
         user.setPassword(passwordEncoder.encode(userDTO.password()));
         User savedUser = userRepository.save(user);
+        timeBlockService.createDefaultTimeBlocks(savedUser);
         return userMapper.toResponse(savedUser);
     }
 
@@ -67,11 +72,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(UserUpdateDTO userDTO) {
-        User existingUser = userRepository.findByUsername(userDTO.username())
+    public void updateUser(Integer id, UserUpdateDTO userDTO) {
+        User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        updateUserFields(existingUser, userDTO);
+        userMapper.updateUserFromDto(userDTO, existingUser);
         userRepository.save(existingUser);
     }
 
@@ -90,23 +95,6 @@ public class UserServiceImpl implements UserService {
 
         if (userRepository.existsByUsername(username)) {
             throw new BusinessValidationException("User already exists");
-        }
-    }
-
-    private void updateUserFields(User user, UserUpdateDTO updateDTO) {
-        if (updateDTO.username() != null && !updateDTO.username().equals(user.getUsername())) {
-            if (userRepository.existsByUsername(updateDTO.username())) {
-                throw new BusinessValidationException("Username already taken");
-            }
-            user.setUsername(updateDTO.username());
-        }
-
-        if (updateDTO.password() != null) {
-            user.setPassword(updateDTO.password());
-        }
-
-        if (updateDTO.isBlocked() != null) {
-            user.setBlocked(updateDTO.isBlocked());
         }
     }
 }
