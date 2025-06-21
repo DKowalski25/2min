@@ -2,6 +2,7 @@ package com.github.DKowalski25._min.dto.task;
 
 import com.github.DKowalski25._min.models.Task;
 
+import com.github.DKowalski25._min.models.TimeBlock;
 import com.github.DKowalski25._min.models.User;
 
 import org.mapstruct.*;
@@ -38,5 +39,12 @@ public interface TaskMapper {
         User user = new User();
         user.setId(userId);
         return user;
+    }
+
+    @Named("mapTimeBlock")
+    default TimeBlock mapTimeBlock(Integer timeBlockId) {
+        TimeBlock block = new TimeBlock();
+        block.setId(timeBlockId);
+        return block;
     }
 }
