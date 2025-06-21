@@ -12,6 +12,11 @@ public interface UserMapper {
     @Mapping(target = "blocked", constant = "false")
     User toEntity(UserRequestDTO dto);
 
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "tasks", ignore = true)
+    @Mapping(target = "timeBlocks", ignore = true)
+    User toEntity(UserResponseDTO dto);
+
     UserResponseDTO toResponse(User user);
 
     @Mapping(target = "password", ignore = true)
