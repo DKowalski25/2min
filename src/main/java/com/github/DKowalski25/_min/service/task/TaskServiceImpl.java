@@ -8,8 +8,6 @@ import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 import com.github.DKowalski25._min.models.Task;
 import com.github.DKowalski25._min.repository.task.TaskRepository;
 
-import com.github.DKowalski25._min.repository.timeblock.TimeBlockRepository;
-
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -21,7 +19,6 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
-    private final TimeBlockRepository timeBlockRepository;
 
     @Override
     public TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO, int userId) {
@@ -38,8 +35,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskResponseDTO> getAllTasks() {
-        return taskRepository.findAll().stream()
+    public List<TaskResponseDTO> getAllTasks(int userId) {
+        return taskRepository.findByUserId(userId).stream()
                 .map(taskMapper::toResponse)
                 .toList();
     }
