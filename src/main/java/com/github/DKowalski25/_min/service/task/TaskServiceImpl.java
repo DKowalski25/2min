@@ -42,9 +42,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponseDTO updateTask(int id, TaskUpdateDTO taskUpdateDTO) {
+    public TaskResponseDTO updateTask(int id, TaskUpdateDTO taskUpdateDTO, int userId) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found", id));
+
+        if (task.getUser().getId() != userId) {
+            throw new AccessDeniedException("You don't have permission to update this task");
+        }
 
         taskMapper.updateFromDto(taskUpdateDTO, task);
         Task saved = taskRepository.save(task);
