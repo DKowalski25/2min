@@ -4,6 +4,7 @@ import com.github.DKowalski25._min.dto.task.TaskMapper;
 import com.github.DKowalski25._min.dto.task.TaskRequestDTO;
 import com.github.DKowalski25._min.dto.task.TaskResponseDTO;
 import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
+import com.github.DKowalski25._min.exceptions.AccessDeniedException;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 import com.github.DKowalski25._min.models.Task;
 import com.github.DKowalski25._min.repository.task.TaskRepository;
@@ -56,9 +57,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(int id) {
-        if (!taskRepository.existsById(id)) {
-            throw new EntityNotFoundException("Task", id);
+    public void deleteTask(int id, int userId) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Task not found", id));
+
+        if (task.getUser().getId() != userId) {
+            throw new AccessDeniedException("You don't have permission to delete this task");
         }
         taskRepository.deleteById(id);
     }
