@@ -6,6 +6,9 @@
   --text: #1e293b;
   --shadow: rgba(0, 0, 0, 0.1);
   --note-bg: #ffffff;
+
+  --tag-main: #d1fae5;   /* light green */
+  --tag-extra: #e0f2fe;  /* light blue */
 }
 
 * {
@@ -65,11 +68,23 @@ body {
 }
 
 .note {
-  background: var(--note-bg);
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 1px 3px var(--shadow);
   position: relative;
+}
+
+.note[data-tag="MAIN"] {
+  background: var(--tag-main);
+}
+
+.note[data-tag="EXTRA"] {
+  background: var(--tag-extra);
+}
+
+.note.done {
+  opacity: 0.6;
+  text-decoration: line-through;
 }
 
 .note-actions {
@@ -81,6 +96,7 @@ body {
 .note-actions button {
   padding: 5px 10px;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .modal {
@@ -138,6 +154,24 @@ body {
   margin-top: 15px;
 }
 
+.auth-container {
+  max-width: 400px;
+  margin: 100px auto;
+  background: var(--note-bg);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow);
+  text-align: center;
+}
+
+.auth-container h1 {
+  margin-bottom: 20px;
+}
+
+.auth-link {
+  margin-top: 10px;
+}
+
 .btn-primary {
   background: var(--primary);
   color: white;
@@ -165,8 +199,25 @@ body {
   cursor: pointer;
 }
 
+.error {
+  color: var(--error);
+  margin-top: 10px;
+}
+
+.status-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
 @media (max-width: 768px) {
   .tabs {
     grid-template-columns: 1fr;
+  }
+
+  .timer {
+    flex-direction: column;
+    gap: 10px;
   }
 }
