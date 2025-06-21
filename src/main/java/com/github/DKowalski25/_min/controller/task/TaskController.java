@@ -4,9 +4,11 @@ import com.github.DKowalski25._min.dto.task.TaskRequestDTO;
 import com.github.DKowalski25._min.dto.task.TaskResponseDTO;
 import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
 
+import com.github.DKowalski25._min.models.CustomUserDetails;
 import com.github.DKowalski25._min.repository.task.TaskRepository;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +40,9 @@ public interface TaskController {
      * @return {@link ResponseEntity} with created task data and HTTP status 201 (Created)
      */
     @PostMapping
-    ResponseEntity<TaskResponseDTO> createTask(@RequestBody TaskRequestDTO taskRequestDTO);
+    ResponseEntity<TaskResponseDTO> createTask(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody TaskRequestDTO taskRequestDTO);
 
     /**
      * Retrieves a task by ID.
