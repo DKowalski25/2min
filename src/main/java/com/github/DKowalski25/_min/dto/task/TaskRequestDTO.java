@@ -21,9 +21,5 @@ public record TaskRequestDTO(
 
     @NotNull
     @Positive
-    Integer timeBlockId,
-
-    @NotNull
-    @Positive
-    Integer userId
+    Integer timeBlockId
 ) {}
