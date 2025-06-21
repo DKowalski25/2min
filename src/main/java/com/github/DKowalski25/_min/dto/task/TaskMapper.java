@@ -13,9 +13,9 @@ public interface TaskMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "done", constant = "false")
-    @Mapping(target = "timeBlock", source = "timeBlockId", qualifiedByName = "mapTimeBlock")
+    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
     @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
-    Task toEntity(TaskRequestDTO dto);
+    Task toEntity(TaskRequestDTO dto, int userId);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "done", constant = "false")
