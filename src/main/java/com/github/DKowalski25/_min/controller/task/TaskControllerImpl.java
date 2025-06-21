@@ -56,8 +56,10 @@ public class TaskControllerImpl implements TaskController {
     }
 
     @Override
-    public ResponseEntity<Void> deleteTask(@PathVariable int id) {
-        taskService.deleteTask(id);
+    public ResponseEntity<Void> deleteTask(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable int id) {
+        taskService.deleteTask(id, userDetails.getId());
         return ResponseEntity.noContent().build();
     }
 }

@@ -87,5 +87,7 @@ public interface TaskController {
      *         or status 404 (Not Found) if task doesn't exist
      */
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteTask(@PathVariable int id);
+    ResponseEntity<Void> deleteTask(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable int id);
 }
