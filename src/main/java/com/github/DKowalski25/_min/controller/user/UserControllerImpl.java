@@ -23,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
 public class UserControllerImpl implements UserController {
+
     private final UserService userService;
 
     @Override
