@@ -10,6 +10,8 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "role", constant = "USER") // или default значение
     @Mapping(target = "blocked", constant = "false")
+    @Mapping(target = "tasks", ignore = true)
+    @Mapping(target = "timeBlocks", ignore = true)
     User toEntity(UserRequestDTO dto);
 
     @Mapping(target = "password", ignore = true)
