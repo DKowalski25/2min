@@ -1,0 +1,52 @@
+package com.github.DKowalski25._min.controller.calendar;
+
+import com.github.DKowalski25._min.dto.calendar.CalendarEventRequestDTO;
+import com.github.DKowalski25._min.dto.calendar.CalendarEventResponseDTO;
+import com.github.DKowalski25._min.dto.calendar.CalendarEventUpdateDTO;
+import com.github.DKowalski25._min.service.calendar.CalendarEventService;
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/calendar")
+public class CalendarEventControllerImpl implements CalendarEventController {
+
+    private final CalendarEventService calendarEventService;
+
+    @Override
+    public ResponseEntity<CalendarEventResponseDTO> createEvent(
+            @RequestBody CalendarEventRequestDTO calendarEventRequestDTO, @PathVariable int userId) {
+        CalendarEventResponseDTO calendarEventResponseDTO = calendarEventService.createEvent(
+                calendarEventRequestDTO, userId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(calendarEventResponseDTO);
+    }
+
+    @Override
+    public ResponseEntity<List<CalendarEventResponseDTO>> getUserEvents(@PathVariable int userId) {
+        List<CalendarEventResponseDTO> calendarEventResponseDTOs = calendarEventService.getUserEvents(userId);
+        return ResponseEntity.ok(calendarEventResponseDTOs);
+    }
+
+    @Override
+    public ResponseEntity<CalendarEventResponseDTO> updateCalendarEvent(
+            @RequestBody CalendarEventUpdateDTO calendarEventUpdateDTO, @PathVariable int eventId) {
+        CalendarEventResponseDTO calendarEventResponseDTO = calendarEventService.updateEvent(calendarEventUpdateDTO, eventId);
+        return ResponseEntity.ok(calendarEventResponseDTO);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteCalendarEvent(@PathVariable int eventId) {
+        calendarEventService.deleteEvent(eventId);
+        return ResponseEntity.noContent().build();
+    }
+}
