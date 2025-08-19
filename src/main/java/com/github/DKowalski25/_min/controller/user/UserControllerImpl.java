@@ -26,6 +26,7 @@ public class UserControllerImpl implements UserController {
 
     private final UserService userService;
 
+    // оставить метод только для внутренних созданий юзеров Админом
     @Override
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody @Valid UserRequestDTO userDto) {
         UserResponseDTO createdUser = userService.createUser(userDto);
