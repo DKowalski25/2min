@@ -8,15 +8,12 @@ import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Interface for the authentication and user registration controller.
  * Handles login and registration operations via the REST API.
  */
-@RequestMapping("/api/auth")
 public interface AuthController {
 
     /**
@@ -25,7 +22,6 @@ public interface AuthController {
      * @param request object containing the username and password
      * @return JWT token in case of successful authentication
      */
-    @PostMapping("/login")
     ResponseEntity<String> login(@RequestBody LoginRequest request);
 
     /**
@@ -34,6 +30,5 @@ public interface AuthController {
      * @param dto object with user data (name, email, password, etc.)
      * @return created user in DTS format
      */
-    @PostMapping("/register")
     ResponseEntity<UserResponseDTO> register(@RequestBody @Valid UserRequestDTO dto);
 }
