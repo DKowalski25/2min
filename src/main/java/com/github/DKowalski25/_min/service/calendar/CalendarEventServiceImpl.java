@@ -55,6 +55,6 @@ public class CalendarEventServiceImpl implements CalendarEventService {
 
     @Override
     public void deleteEvent(int eventId) {
-        calendarEventRepository.deleteEventByEventId(eventId);
+        calendarEventRepository.deleteEventById(eventId);
     }
 }
