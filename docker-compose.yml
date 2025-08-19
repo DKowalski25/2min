@@ -27,10 +27,8 @@ services:
       - "8080:8080"
     env_file:
       - .env
-    volumes:
-      - ./.env:/app/.env
-      - ./logs:/app/logs
     environment:
+      DOCKER_ENV: true
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
@@ -38,6 +36,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    volumes:
+      - gradle-cache:/root/.gradle
 
   frontend:
     image: nginx:alpine
@@ -52,3 +52,4 @@ services:
 
 volumes:
   postgres-data:
+  gradle-cache:
