@@ -36,8 +36,8 @@ public interface CalendarEventRepository extends JpaRepository<CalendarEvent, In
     /**
      * Deletes a calendar event by its ID.
      *
-     * @param eventId the ID of the event to delete (must be positive)
+     * @param id the ID of the event to delete (must be positive)
      * @throws org.springframework.dao.EmptyResultDataAccessException if no event exists with the given ID
      */
-    void deleteEventByEventId(int eventId);
+    void deleteEventById(int id);
 }
