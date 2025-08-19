@@ -7,7 +7,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "calendar_event")
+@Table(name = "calendar_events")
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
