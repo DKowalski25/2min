@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * REST controller for managing calendar event operations.
@@ -67,9 +68,10 @@ public interface CalendarEventController {
      *         or status 404 (Not Found) if event doesn't exist
      * @throws jakarta.validation.ValidationException if DTO validation fails
      */
-    @PatchMapping("/update/{eventId}")
     ResponseEntity<CalendarEventResponseDTO> updateCalendarEvent(
-            @RequestBody @Valid  CalendarEventUpdateDTO calendarEventUpdateDTO, @PathVariable int eventId);
+            CustomUserDetails userDetails,
+            CalendarEventUpdateDTO calendarEventUpdateDTO,
+            UUID eventId);
 
     /**
      * Deletes a calendar event by its identifier.

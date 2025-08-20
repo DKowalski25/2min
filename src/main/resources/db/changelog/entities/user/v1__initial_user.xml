@@ -7,8 +7,8 @@
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <changeSet id="v1__initial_user" author="Dkowalski25">
         <createTable tableName="users">
-            <column name="id" type="BIGSERIAL" autoIncrement="true">
-                <constraints primaryKey="true"/>
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="username" type="VARCHAR(55)">
                 <constraints nullable="false" unique="true"/>

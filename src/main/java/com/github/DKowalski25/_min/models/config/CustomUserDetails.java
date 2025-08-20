@@ -8,13 +8,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
     private final User user;
 
-    public Integer getId() {
+    public UUID getId() {
         return user.getId();
     }
 

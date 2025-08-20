@@ -2,8 +2,10 @@ package com.github.DKowalski25._min.dto.user;
 
 import com.github.DKowalski25._min.models.UserRole;
 
+import java.util.UUID;
+
 public record UserResponseDTO (
-    Integer id,
+    UUID id,
     String username,
     String email,
     UserRole role,

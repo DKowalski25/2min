@@ -1,9 +1,11 @@
 package com.github.DKowalski25._min.dto.calendar;
 
-import com.github.DKowalski25._min.models.User;
+import com.github.DKowalski25._min.dto.user.UserResponseDTO;
+
+import java.util.UUID;
 
 public record CalendarEventResponseDTO(
-    int id,
+    UUID id,
     String title,
     String description,
     String startEvent,

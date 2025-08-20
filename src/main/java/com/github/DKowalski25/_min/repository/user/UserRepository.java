@@ -2,12 +2,13 @@ package com.github.DKowalski25._min.repository.user;
 
 import com.github.DKowalski25._min.controller.user.UserController;
 import com.github.DKowalski25._min.models.User;
-
 import com.github.DKowalski25._min.service.user.UserService;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Spring Data JPA repository for {@link User} entities management.
@@ -27,7 +28,7 @@ import java.util.Optional;
  * @see UserController
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, UUID> {
 
     /**
      * Finds a user by email address.

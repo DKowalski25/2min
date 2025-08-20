@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -50,7 +51,7 @@ public class TaskControllerImpl implements TaskController {
     @Override
     public ResponseEntity<TaskResponseDTO> updateTask(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable int id,
+            @PathVariable UUID id,
             @RequestBody TaskUpdateDTO taskRequestDTO) {
         return ResponseEntity.ok(taskService.updateTask(id, taskRequestDTO, userDetails.getId()));
     }
@@ -58,7 +59,7 @@ public class TaskControllerImpl implements TaskController {
     @Override
     public ResponseEntity<Void> deleteTask(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable int id) {
+            @PathVariable UUID id) {
         taskService.deleteTask(id, userDetails.getId());
         return ResponseEntity.noContent().build();
     }

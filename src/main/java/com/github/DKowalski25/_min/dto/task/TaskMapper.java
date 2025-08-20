@@ -7,6 +7,8 @@ import com.github.DKowalski25._min.models.User;
 
 import org.mapstruct.*;
 
+import java.util.UUID;
+
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface TaskMapper {
@@ -15,13 +17,13 @@ public interface TaskMapper {
     @Mapping(target = "done", constant = "false")
     @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
     @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
-    Task toEntity(TaskRequestDTO dto, int userId);
+    Task toEntity(TaskRequestDTO dto, UUID userId);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "done", constant = "false")
     @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
     @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
-    Task toEntityWithUser(TaskRequestDTO dto, int userId);
+    Task toEntityWithUser(TaskRequestDTO dto, UUID userId);
 
     @Mapping(target = "timeBlockType", source = "timeBlock.type")
     @Mapping(target = "userId", source = "user.id")
@@ -35,14 +37,14 @@ public interface TaskMapper {
 
 
     @Named("mapUser")
-    default User mapUser(int userId) {
+    default User mapUser(UUID userId) {
         User user = new User();
         user.setId(userId);
         return user;
     }
 
     @Named("mapTimeBlock")
-    default TimeBlock mapTimeBlock(Integer timeBlockId) {
+    default TimeBlock mapTimeBlock(UUID timeBlockId) {
         TimeBlock block = new TimeBlock();
         block.setId(timeBlockId);
         return block;

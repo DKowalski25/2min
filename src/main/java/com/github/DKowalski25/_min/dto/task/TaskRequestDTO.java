@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 
 public record TaskRequestDTO(
     @NotBlank(message = "Title cannot be blank")
@@ -21,5 +23,5 @@ public record TaskRequestDTO(
 
     @NotNull
     @Positive
-    Integer timeBlockId
+    UUID timeBlockId
 ) {}

@@ -7,6 +7,7 @@ import com.github.DKowalski25._min.service.calendar.CalendarEventService;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Spring Data JPA repository for {@link CalendarEvent} entities management.
@@ -24,14 +25,14 @@ import java.util.List;
  * @see CalendarEventService
  * @see CalendarEventController
  */
-public interface CalendarEventRepository extends JpaRepository<CalendarEvent, Integer> {
+public interface CalendarEventRepository extends JpaRepository<CalendarEvent, UUID> {
     /**
      * Finds all calendar events associated with the specified user ID.
      *
      * @param userId the ID of the user to search events for (must be positive)
      * @return a {@link List} of found calendar events, possibly empty
      */
-    List<CalendarEvent> findByUserId(int userId);
+    List<CalendarEvent> findByUserId(UUID userId);
 
     /**
      * Deletes a calendar event by its ID.
@@ -39,5 +40,5 @@ public interface CalendarEventRepository extends JpaRepository<CalendarEvent, In
      * @param id the ID of the event to delete (must be positive)
      * @throws org.springframework.dao.EmptyResultDataAccessException if no event exists with the given ID
      */
-    void deleteEventById(int id);
+    void deleteEventById(UUID id);
 }

@@ -8,6 +8,7 @@ import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 import com.github.DKowalski25._min.repository.calendar.CalendarEventRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Service interface for managing {@link com.github.DKowalski25._min.models.CalendarEvent} entities.
@@ -43,7 +44,7 @@ public interface CalendarEventService {
      * @return list of user's calendar events (never {@code null}, may be empty)
      * @throws IllegalArgumentException if userId is not positive
      */
-    List<CalendarEventResponseDTO> getUserEvents(int userId);
+    List<CalendarEventResponseDTO> getUserEvents(UUID userId);
 
     /**
      * Creates a new calendar event.
@@ -54,7 +55,7 @@ public interface CalendarEventService {
      * @throws IllegalArgumentException if parameters are invalid or DTO is {@code null}
      * @throws EntityNotFoundException if user with specified ID doesn't exist
      */
-    CalendarEventResponseDTO createEvent(CalendarEventRequestDTO calendarEventRequestDTO, int userId);
+    CalendarEventResponseDTO createEvent(CalendarEventRequestDTO calendarEventRequestDTO, UUID userId);
 
     /**
      * Updates an existing calendar event.
@@ -65,7 +66,7 @@ public interface CalendarEventService {
      * @throws IllegalArgumentException if parameters are invalid or DTO is {@code null}
      * @throws EntityNotFoundException if event or user doesn't exist
      */
-    CalendarEventResponseDTO updateEvent(CalendarEventUpdateDTO calendarEventUpdateDTO, int eventId);
+    CalendarEventResponseDTO updateEvent(CalendarEventUpdateDTO calendarEventUpdateDTO, UUID eventId, UUID userId);
 
     /**
      * Deletes a calendar event by its identifier.
@@ -74,5 +75,5 @@ public interface CalendarEventService {
      * @throws IllegalArgumentException if eventId is not positive
      * @throws EntityNotFoundException if event doesn't exist
      */
-    void deleteEvent(int eventId);
+    void deleteEvent(UUID eventId, UUID userId);
 }

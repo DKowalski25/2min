@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,14 +40,19 @@ public class CalendarEventControllerImpl implements CalendarEventController {
 
     @Override
     public ResponseEntity<CalendarEventResponseDTO> updateCalendarEvent(
-            @RequestBody CalendarEventUpdateDTO calendarEventUpdateDTO, @PathVariable int eventId) {
-        CalendarEventResponseDTO calendarEventResponseDTO = calendarEventService.updateEvent(calendarEventUpdateDTO, eventId);
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody CalendarEventUpdateDTO calendarEventUpdateDTO,
+            @PathVariable UUID eventId) {
+        CalendarEventResponseDTO calendarEventResponseDTO = calendarEventService.updateEvent(
+                calendarEventUpdateDTO, eventId, userDetails.getId());
         return ResponseEntity.ok(calendarEventResponseDTO);
     }
 
     @Override
-    public ResponseEntity<Void> deleteCalendarEvent(@PathVariable int eventId) {
-        calendarEventService.deleteEvent(eventId);
+    @DeleteMapping("/{eventId}")
+    public ResponseEntity<Void> deleteCalendarEvent(
+            @AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable UUID eventId) {
+        calendarEventService.deleteEvent(eventId, userDetails.getId());
         return ResponseEntity.noContent().build();
     }
 }
