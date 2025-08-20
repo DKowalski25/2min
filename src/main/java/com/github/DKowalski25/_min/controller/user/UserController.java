@@ -39,15 +39,16 @@ public interface UserController {
      */
     ResponseEntity<UserResponseDTO> createUser(UserRequestDTO userDto);
 
-    /**
-     * Retrieves a user by ID.
-     *
-     * @param id the user identifier (must not be {@code null})
-     * @return {@link ResponseEntity} with user data and HTTP status 200 (OK),
-     *         or status 404 (Not Found) if user doesn't exist
-     */
-    @GetMapping("/{id}")
-    ResponseEntity<UserResponseDTO> getUserById(@PathVariable Integer id);
+//    /**
+//     * Retrieves a user by ID.
+//     *
+//     * @param id the user identifier (must not be {@code null})
+//     * @return {@link ResponseEntity} with user data and HTTP status 200 (OK),
+//     *         or status 404 (Not Found) if user doesn't exist
+//     */
+//    ResponseEntity<UserResponseDTO> getUserById(UUID id);
+
+    ResponseEntity<UserResponseDTO> getCurrentUser(CustomUserDetails userDetails);
 
     /**
      * Retrieves a user by username.
