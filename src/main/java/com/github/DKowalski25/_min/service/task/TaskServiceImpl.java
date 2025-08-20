@@ -26,9 +26,20 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO, UUID userId) {
-        Task enrichedTask = taskMapper.toEntityWithUser(taskRequestDTO, userId);
-        Task task = taskRepository.save(enrichedTask);
-        return taskMapper.toResponse(task);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found", userId));
+        TimeBlock timeBlock = timeBlockRepository.findById(taskRequestDTO.timeBlockId())
+                .orElseThrow(() -> new EntityNotFoundException("TimeBlock not found", taskRequestDTO.timeBlockId()));
+
+        if (!timeBlock.getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("You don't have permission to create this task");
+        }
+
+        Task task = taskMapper.toEntity(taskRequestDTO);
+        task.setUser(user);
+        task.setTimeBlock(timeBlock);
+        Task saved = taskRepository.save(task);
+        return taskMapper.toResponse(saved);
     }
 
     @Override
