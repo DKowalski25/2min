@@ -1,5 +1,6 @@
-package com.github.DKowalski25._min.models;
+package com.github.DKowalski25._min.models.config;
 
+import com.github.DKowalski25._min.models.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

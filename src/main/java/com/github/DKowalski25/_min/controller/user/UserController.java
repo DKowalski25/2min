@@ -3,12 +3,10 @@ package com.github.DKowalski25._min.controller.user;
 import com.github.DKowalski25._min.dto.user.UserRequestDTO;
 import com.github.DKowalski25._min.dto.user.UserResponseDTO;
 import com.github.DKowalski25._min.dto.user.UserUpdateDTO;
+import com.github.DKowalski25._min.models.config.CustomUserDetails;
 import com.github.DKowalski25._min.repository.user.UserRepository;
 
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -80,7 +78,7 @@ public interface UserController {
     /**
      * Updates an existing user.
      *
-     * @param id the user identifier to update (must not be {@code null})
+     * @param userDetails the user identifier to update (must not be {@code null})
      * @param userDto the user update data (must not be {@code null})
      * @return {@link ResponseEntity} with HTTP status 204 (No Content) if successful,
      *         or status 404 (Not Found) if user doesn't exist
@@ -90,7 +88,7 @@ public interface UserController {
     /**
      * Deletes a user by ID.
      *
-     * @param id the user identifier to delete (must not be {@code null})
+     * @param userDetails the user identifier to delete (must not be {@code null})
      * @return {@link ResponseEntity} with HTTP status 204 (No Content) if successful,
      *         or status 404 (Not Found) if user doesn't exist
      */

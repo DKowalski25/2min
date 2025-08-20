@@ -3,7 +3,7 @@ package com.github.DKowalski25._min.controller.calendar;
 import com.github.DKowalski25._min.dto.calendar.CalendarEventRequestDTO;
 import com.github.DKowalski25._min.dto.calendar.CalendarEventResponseDTO;
 import com.github.DKowalski25._min.dto.calendar.CalendarEventUpdateDTO;
-
+import com.github.DKowalski25._min.models.config.CustomUserDetails;
 import com.github.DKowalski25._min.repository.calendar.CalendarEventRepository;
 import com.github.DKowalski25._min.service.calendar.CalendarEventService;
 
@@ -38,7 +38,7 @@ public interface CalendarEventController {
      * Creates a new calendar event for specified user.
      *
      * @param calendarEventRequestDTO the event creation data (must not be {@code null})
-     * @param userId the owner user identifier (must be positive)
+     * @param userDetails the owner user identifier (must be positive)
      * @return {@link ResponseEntity} with created event data and HTTP status 201 (Created),
      *         or status 404 (Not Found) if user doesn't exist
      * @throws jakarta.validation.ValidationException if DTO validation fails
@@ -49,7 +49,7 @@ public interface CalendarEventController {
     /**
      * Retrieves all calendar events for specified user.
      *
-     * @param userId the user identifier (must be positive)
+     * @param userDetails the user identifier (must be positive)
      * @return {@link ResponseEntity} with list of user's events and HTTP status 200 (OK),
      *         or empty list if no events exist
      */
@@ -58,6 +58,7 @@ public interface CalendarEventController {
     /**
      * Updates an existing calendar event.
      *
+     * @param userDetails the owner user identifier (must be positive)
      * @param calendarEventUpdateDTO the event update data (must not be {@code null})
      * @param eventId the event identifier to update (must be positive)
      * @return {@link ResponseEntity} with updated event data and HTTP status 200 (OK),
@@ -72,6 +73,7 @@ public interface CalendarEventController {
     /**
      * Deletes a calendar event by its identifier.
      *
+     * @param userDetails the owner user identifier (must be positive)
      * @param eventId the event identifier to delete (must be positive)
      * @return {@link ResponseEntity} with HTTP status 204 (No Content) if successful,
      *         or status 404 (Not Found) if event doesn't exist

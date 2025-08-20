@@ -3,6 +3,7 @@ package com.github.DKowalski25._min.controller.user;
 import com.github.DKowalski25._min.dto.user.UserRequestDTO;
 import com.github.DKowalski25._min.dto.user.UserResponseDTO;
 import com.github.DKowalski25._min.dto.user.UserUpdateDTO;
+import com.github.DKowalski25._min.models.config.CustomUserDetails;
 import com.github.DKowalski25._min.service.user.UserService;
 
 import jakarta.validation.Valid;
@@ -12,10 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -69,7 +68,6 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<List<UserResponseDTO>> getAll() {
         List<UserResponseDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
-
     }
 
     @Override

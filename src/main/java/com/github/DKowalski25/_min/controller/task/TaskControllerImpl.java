@@ -3,7 +3,7 @@ package com.github.DKowalski25._min.controller.task;
 import com.github.DKowalski25._min.dto.task.TaskRequestDTO;
 import com.github.DKowalski25._min.dto.task.TaskResponseDTO;
 import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
-import com.github.DKowalski25._min.models.CustomUserDetails;
+import com.github.DKowalski25._min.models.config.CustomUserDetails;
 import com.github.DKowalski25._min.service.task.TaskService;
 
 import lombok.RequiredArgsConstructor;

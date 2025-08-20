@@ -3,16 +3,15 @@ package com.github.DKowalski25._min.controller.calendar;
 import com.github.DKowalski25._min.dto.calendar.CalendarEventRequestDTO;
 import com.github.DKowalski25._min.dto.calendar.CalendarEventResponseDTO;
 import com.github.DKowalski25._min.dto.calendar.CalendarEventUpdateDTO;
+import com.github.DKowalski25._min.models.config.CustomUserDetails;
 import com.github.DKowalski25._min.service.calendar.CalendarEventService;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,9 +26,10 @@ public class CalendarEventControllerImpl implements CalendarEventController {
     @Override
     @PostMapping
     public ResponseEntity<CalendarEventResponseDTO> createEvent(
-            @RequestBody CalendarEventRequestDTO calendarEventRequestDTO, @PathVariable int userId) {
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody CalendarEventRequestDTO calendarEventRequestDTO) {
         CalendarEventResponseDTO calendarEventResponseDTO = calendarEventService.createEvent(
-                calendarEventRequestDTO, userId);
+                calendarEventRequestDTO, userDetails.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(calendarEventResponseDTO);
     }
 

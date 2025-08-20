@@ -5,7 +5,7 @@ import com.github.DKowalski25._min.dto.auth.LoginRequest;
 import com.github.DKowalski25._min.dto.user.UserMapper;
 import com.github.DKowalski25._min.dto.user.UserRequestDTO;
 import com.github.DKowalski25._min.dto.user.UserResponseDTO;
-import com.github.DKowalski25._min.models.CustomUserDetails;
+import com.github.DKowalski25._min.models.config.CustomUserDetails;
 import com.github.DKowalski25._min.models.User;
 import com.github.DKowalski25._min.service.user.UserService;
 
