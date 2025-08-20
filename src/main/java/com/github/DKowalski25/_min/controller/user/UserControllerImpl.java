@@ -76,7 +76,6 @@ public class UserControllerImpl implements UserController {
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody @Valid UserUpdateDTO userDto) {
         return ResponseEntity.ok(userService.updateUser(userDetails.getId(), userDto));
-
     }
 
     @Override
