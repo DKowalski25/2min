@@ -2,9 +2,11 @@ package com.github.DKowalski25._min.controller.exception;
 
 import com.github.DKowalski25._min.dto.ErrorResponse;
 import com.github.DKowalski25._min.dto.ValidationErrorDTO;
+import com.github.DKowalski25._min.exceptions.AccessDeniedException;
 import com.github.DKowalski25._min.exceptions.BusinessValidationException;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -41,5 +43,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
         return ResponseEntity.internalServerError()
                 .body(new ErrorResponse("Internal server error"));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handleAccessDenied(AccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
     }
 }
