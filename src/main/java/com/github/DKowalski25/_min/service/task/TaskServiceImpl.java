@@ -74,7 +74,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found", id));
 
-        if (task.getUser().getId() != userId) {
+        if (!task.getUser().getId().equals(userId)) {
             throw new AccessDeniedException("You don't have permission to update this task");
         }
 
