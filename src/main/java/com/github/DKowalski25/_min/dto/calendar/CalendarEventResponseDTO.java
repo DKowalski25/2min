@@ -10,5 +10,5 @@ public record CalendarEventResponseDTO(
     String description,
     String startEvent,
     String endEvent,
-    User organizer
+    UserResponseDTO organizer
 ) {}
