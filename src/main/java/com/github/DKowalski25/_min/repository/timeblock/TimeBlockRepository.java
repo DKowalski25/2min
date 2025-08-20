@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Spring Data JPA repository for {@link TimeBlock} entities management.
@@ -31,7 +32,7 @@ import java.util.Optional;
  * @see TimeBlockUpdateDTO
  */
 @Repository
-public interface TimeBlockRepository extends JpaRepository<TimeBlock, Integer> {
+public interface TimeBlockRepository extends JpaRepository<TimeBlock, UUID> {
 
     /**
      * Finds a time block by its type.
