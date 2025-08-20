@@ -7,7 +7,12 @@ import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
 import com.github.DKowalski25._min.exceptions.AccessDeniedException;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 import com.github.DKowalski25._min.models.Task;
+import com.github.DKowalski25._min.models.TimeBlock;
+import com.github.DKowalski25._min.models.User;
 import com.github.DKowalski25._min.repository.task.TaskRepository;
+
+import com.github.DKowalski25._min.repository.timeblock.TimeBlockRepository;
+import com.github.DKowalski25._min.repository.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +27,8 @@ import java.util.UUID;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+    private final UserRepository userRepository;
+    private final TimeBlockRepository timeBlockRepository;
 
     @Override
     @Transactional
@@ -44,9 +51,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(readOnly = true)
-    public TaskResponseDTO getTaskById(UUID id) {
+    public TaskResponseDTO getTaskById(UUID id, UUID userId) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found", id));
+        if (!task.getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("Access to task denied");
+        }
         return taskMapper.toResponse(task);
     }
 
