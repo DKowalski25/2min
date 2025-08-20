@@ -43,13 +43,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO getUserById(Integer id) {
+    @Transactional(readOnly = true)
+    public UserResponseDTO getUserById(UUID id) {
         return userRepository.findById(id)
                 .map(userMapper::toResponse)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResponseDTO getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .map(userMapper::toResponse)
@@ -57,6 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResponseDTO getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .map(userMapper::toResponse)
@@ -89,6 +92,7 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
+    @Transactional(readOnly = true)
     private void validateUserDoesNotExist(String username, String email) {
         if (userRepository.existsByEmail(email)) {
             throw new BusinessValidationException("Email already in use");

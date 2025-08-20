@@ -12,6 +12,7 @@ import com.github.DKowalski25._min.repository.task.TaskRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,28 +24,32 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
 
     @Override
-    public TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO, int userId) {
+    @Transactional
+    public TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO, UUID userId) {
         Task enrichedTask = taskMapper.toEntityWithUser(taskRequestDTO, userId);
         Task task = taskRepository.save(enrichedTask);
         return taskMapper.toResponse(task);
     }
 
     @Override
-    public TaskResponseDTO getTaskById(int id) {
+    @Transactional(readOnly = true)
+    public TaskResponseDTO getTaskById(UUID id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found", id));
         return taskMapper.toResponse(task);
     }
 
     @Override
-    public List<TaskResponseDTO> getAllTasks(int userId) {
+    @Transactional(readOnly = true)
+    public List<TaskResponseDTO> getAllTasks(UUID userId) {
         return taskRepository.findByUserId(userId).stream()
                 .map(taskMapper::toResponse)
                 .toList();
     }
 
     @Override
-    public TaskResponseDTO updateTask(int id, TaskUpdateDTO taskUpdateDTO, int userId) {
+    @Transactional
+    public TaskResponseDTO updateTask(UUID id, TaskUpdateDTO taskUpdateDTO, UUID userId) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found", id));
 
@@ -58,7 +63,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(int id, int userId) {
+    @Transactional
+    public void deleteTask(UUID id, UUID userId) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found", id));
 
