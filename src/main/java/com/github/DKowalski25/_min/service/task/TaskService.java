@@ -50,7 +50,7 @@ public interface TaskService {
      * @return the task response DTO
      * @throws EntityNotFoundException if no task exists with the given ID
      */
-    TaskResponseDTO getTaskById(UUID id);
+    TaskResponseDTO getTaskById(UUID id, UUID userId);
 
     /**
      * Retrieves all available tasks.
