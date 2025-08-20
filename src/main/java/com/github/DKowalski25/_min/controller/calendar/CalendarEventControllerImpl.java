@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/calendar")
+@RequestMapping("/api/v1/calendars")
 public class CalendarEventControllerImpl implements CalendarEventController {
 
     private final CalendarEventService calendarEventService;
