@@ -8,9 +8,12 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tasks")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"timeBlock"})
 public class Task {
     @Id
     @GeneratedValue(generator = "UUID")

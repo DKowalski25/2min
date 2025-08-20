@@ -10,9 +10,12 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"tasks", "timeBlocks"})
 public class User {
     @Id
     @GeneratedValue(generator = "UUID")
