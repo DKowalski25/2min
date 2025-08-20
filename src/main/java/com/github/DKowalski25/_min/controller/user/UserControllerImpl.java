@@ -63,6 +63,7 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok(user);
     }
 
+    // TODO: метод для Админа дореализовать и реализовать публичный доступ через новый адрс {emails}
     @Override
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAll() {
