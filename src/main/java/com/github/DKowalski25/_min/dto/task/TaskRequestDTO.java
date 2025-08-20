@@ -22,6 +22,5 @@ public record TaskRequestDTO(
     Tag tag,
 
     @NotNull
-    @Positive
     UUID timeBlockId
 ) {}
