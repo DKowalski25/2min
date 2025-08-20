@@ -28,30 +28,36 @@ public class UserControllerImpl implements UserController {
 
     // оставить метод только для внутренних созданий юзеров Админом
     @Override
+    @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody @Valid UserRequestDTO userDto) {
         UserResponseDTO createdUser = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @Override
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Integer id) {
-        UserResponseDTO user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDTO> getCurrentUser(@AuthenticationPrincipal CustomUserDetails userDetails){
+        UserResponseDTO userResponseDTO = userService.getUserById(userDetails.getId());
+        return ResponseEntity.ok(userResponseDTO);
+
     }
 
     @Override
+    @GetMapping("/username/{username}")
     public ResponseEntity<UserResponseDTO> getUserByUsername(@PathVariable String username) {
         UserResponseDTO user = userService.getUserByUsername(username);
         return ResponseEntity.ok(user);
     }
 
     @Override
+    @GetMapping("/email/{email}")
     public ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable String email) {
         UserResponseDTO user = userService.getUserByEmail(email);
         return ResponseEntity.ok(user);
     }
 
     @Override
+    @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAll() {
         List<UserResponseDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
@@ -59,15 +65,19 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<Void> updateUser(@PathVariable Integer id, @RequestBody @Valid UserUpdateDTO userDto) {
-        userService.updateUser(id, userDto);
+    @PatchMapping("/me")
+    public ResponseEntity<Void> updateUser(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody @Valid UserUpdateDTO userDto) {
+        userService.updateUser(userDetails.getId(), userDto);
         return ResponseEntity.noContent().build();
 
     }
 
     @Override
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
-        userService.deleteUser(id);
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        userService.deleteUser(userDetails.getId());
         return ResponseEntity.noContent().build();
     }
 }

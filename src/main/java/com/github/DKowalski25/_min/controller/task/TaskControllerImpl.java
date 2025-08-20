@@ -12,21 +12,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/tasks")
+@RequestMapping("/api/v1/tasks")
 public class TaskControllerImpl implements TaskController {
     private final TaskService taskService;
 
     @Override
+    @PostMapping
     public ResponseEntity<TaskResponseDTO> createTask(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody TaskRequestDTO taskRequestDTO) {
@@ -37,11 +35,13 @@ public class TaskControllerImpl implements TaskController {
     }
 
     @Override
-    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable int id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable UUID id) {
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
     @Override
+    @GetMapping
     public ResponseEntity<List<TaskResponseDTO>> getAllTasks(
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
@@ -49,6 +49,7 @@ public class TaskControllerImpl implements TaskController {
     }
 
     @Override
+    @PatchMapping("/{id}")
     public ResponseEntity<TaskResponseDTO> updateTask(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable UUID id,
@@ -57,6 +58,7 @@ public class TaskControllerImpl implements TaskController {
     }
 
     @Override
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable UUID id) {

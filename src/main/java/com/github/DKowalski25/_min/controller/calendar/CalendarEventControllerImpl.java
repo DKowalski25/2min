@@ -25,6 +25,7 @@ public class CalendarEventControllerImpl implements CalendarEventController {
     private final CalendarEventService calendarEventService;
 
     @Override
+    @PostMapping
     public ResponseEntity<CalendarEventResponseDTO> createEvent(
             @RequestBody CalendarEventRequestDTO calendarEventRequestDTO, @PathVariable int userId) {
         CalendarEventResponseDTO calendarEventResponseDTO = calendarEventService.createEvent(
@@ -33,12 +34,14 @@ public class CalendarEventControllerImpl implements CalendarEventController {
     }
 
     @Override
-    public ResponseEntity<List<CalendarEventResponseDTO>> getUserEvents(@PathVariable int userId) {
-        List<CalendarEventResponseDTO> calendarEventResponseDTOs = calendarEventService.getUserEvents(userId);
+    @GetMapping
+    public ResponseEntity<List<CalendarEventResponseDTO>> getUserEvents(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<CalendarEventResponseDTO> calendarEventResponseDTOs = calendarEventService.getUserEvents(userDetails.getId());
         return ResponseEntity.ok(calendarEventResponseDTOs);
     }
 
     @Override
+    @PatchMapping("/update/{eventId}")
     public ResponseEntity<CalendarEventResponseDTO> updateCalendarEvent(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody CalendarEventUpdateDTO calendarEventUpdateDTO,

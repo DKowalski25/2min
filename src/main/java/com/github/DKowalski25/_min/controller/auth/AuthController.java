@@ -4,11 +4,7 @@ import com.github.DKowalski25._min.dto.auth.LoginRequest;
 import com.github.DKowalski25._min.dto.user.UserRequestDTO;
 import com.github.DKowalski25._min.dto.user.UserResponseDTO;
 
-import jakarta.validation.Valid;
-
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Interface for the authentication and user registration controller.
@@ -22,7 +18,7 @@ public interface AuthController {
      * @param request object containing the username and password
      * @return JWT token in case of successful authentication
      */
-    ResponseEntity<String> login(@RequestBody LoginRequest request);
+    ResponseEntity<String> login(LoginRequest request);
 
     /**
      * Registration of a new user.
@@ -30,5 +26,5 @@ public interface AuthController {
      * @param dto object with user data (name, email, password, etc.)
      * @return created user in DTS format
      */
-    ResponseEntity<UserResponseDTO> register(@RequestBody @Valid UserRequestDTO dto);
+    ResponseEntity<UserResponseDTO> register(UserRequestDTO dto);
 }

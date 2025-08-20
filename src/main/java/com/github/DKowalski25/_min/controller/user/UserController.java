@@ -39,8 +39,7 @@ public interface UserController {
      * @return {@link ResponseEntity} with created user data and HTTP status 201 (Created)
      *
      */
-    @PostMapping
-    ResponseEntity<UserResponseDTO> createUser(@RequestBody @Valid UserRequestDTO userDto);
+    ResponseEntity<UserResponseDTO> createUser(UserRequestDTO userDto);
 
     /**
      * Retrieves a user by ID.
@@ -59,8 +58,7 @@ public interface UserController {
      * @return {@link ResponseEntity} with user data and HTTP status 200 (OK),
      *         or status 404 (Not Found) if user doesn't exist
      */
-    @GetMapping("/username/{username}")
-    ResponseEntity<UserResponseDTO> getUserByUsername(@PathVariable String username);
+    ResponseEntity<UserResponseDTO> getUserByUsername(String username);
 
     /**
      * Retrieves a user by email.
@@ -69,8 +67,7 @@ public interface UserController {
      * @return {@link ResponseEntity} with user data and HTTP status 200 (OK),
      *         or status 404 (Not Found) if user doesn't exist
      */
-    @GetMapping("/email/{email}")
-    ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable String email);
+    ResponseEntity<UserResponseDTO> getUserByEmail(String email);
 
     /**
      * Retrieves all users.
@@ -78,7 +75,6 @@ public interface UserController {
      * @return {@link ResponseEntity} with list of all users and HTTP status 200 (OK),
      *         or empty list if no users exist
      */
-    @GetMapping
     ResponseEntity<List<UserResponseDTO>> getAll();
 
     /**
@@ -89,8 +85,7 @@ public interface UserController {
      * @return {@link ResponseEntity} with HTTP status 204 (No Content) if successful,
      *         or status 404 (Not Found) if user doesn't exist
      */
-    @PatchMapping("/{id}")
-    ResponseEntity<Void> updateUser(@PathVariable Integer id, @RequestBody @Valid UserUpdateDTO userDto);
+    ResponseEntity<Void> updateUser(CustomUserDetails userDetails, UserUpdateDTO userDto);
 
     /**
      * Deletes a user by ID.
@@ -99,6 +94,5 @@ public interface UserController {
      * @return {@link ResponseEntity} with HTTP status 204 (No Content) if successful,
      *         or status 404 (Not Found) if user doesn't exist
      */
-    @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteUser(@PathVariable Integer id);
+    ResponseEntity<Void> deleteUser(CustomUserDetails userDetails);
 }

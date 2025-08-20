@@ -6,10 +6,8 @@ import com.github.DKowalski25._min.dto.calendar.CalendarEventUpdateDTO;
 
 import com.github.DKowalski25._min.repository.calendar.CalendarEventRepository;
 import com.github.DKowalski25._min.service.calendar.CalendarEventService;
-import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -45,9 +43,8 @@ public interface CalendarEventController {
      *         or status 404 (Not Found) if user doesn't exist
      * @throws jakarta.validation.ValidationException if DTO validation fails
      */
-    @PostMapping("/{userId}")
-    ResponseEntity<CalendarEventResponseDTO> createEvent(
-            @RequestBody @Valid CalendarEventRequestDTO calendarEventRequestDTO, @PathVariable int userId);
+    ResponseEntity<CalendarEventResponseDTO> createEvent(CustomUserDetails userDetails,
+                                                         CalendarEventRequestDTO calendarEventRequestDTO);
 
     /**
      * Retrieves all calendar events for specified user.
@@ -56,8 +53,7 @@ public interface CalendarEventController {
      * @return {@link ResponseEntity} with list of user's events and HTTP status 200 (OK),
      *         or empty list if no events exist
      */
-    @GetMapping("/{userId}")
-    ResponseEntity<List<CalendarEventResponseDTO>> getUserEvents(@PathVariable int userId);
+    ResponseEntity<List<CalendarEventResponseDTO>> getUserEvents(CustomUserDetails userDetails);
 
     /**
      * Updates an existing calendar event.
@@ -80,8 +76,7 @@ public interface CalendarEventController {
      * @return {@link ResponseEntity} with HTTP status 204 (No Content) if successful,
      *         or status 404 (Not Found) if event doesn't exist
      */
-    @DeleteMapping("{eventId}")
-    ResponseEntity<Void> deleteCalendarEvent(@PathVariable int eventId);
+    ResponseEntity<Void> deleteCalendarEvent(CustomUserDetails userDetails, UUID eventId);
 
 
 }

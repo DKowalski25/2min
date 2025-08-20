@@ -9,9 +9,6 @@ import com.github.DKowalski25._min.repository.task.TaskRepository;
 
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -41,10 +38,7 @@ public interface TaskController {
      * @param taskRequestDTO the task creation data (must not be {@code null})
      * @return {@link ResponseEntity} with created task data and HTTP status 201 (Created)
      */
-    @PostMapping
-    ResponseEntity<TaskResponseDTO> createTask(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestBody TaskRequestDTO taskRequestDTO);
+    ResponseEntity<TaskResponseDTO> createTask(CustomUserDetails userDetails, TaskRequestDTO taskRequestDTO);
 
     /**
      * Retrieves a task by ID.
@@ -61,10 +55,7 @@ public interface TaskController {
      * @return {@link ResponseEntity} with list of all tasks and HTTP status 200 (OK),
      *         or empty list if no tasks exist
      */
-    @GetMapping
-    ResponseEntity<List<TaskResponseDTO>> getAllTasks(
-            @AuthenticationPrincipal CustomUserDetails userDetails
-    );
+    ResponseEntity<List<TaskResponseDTO>> getAllTasks(CustomUserDetails userDetails);
 
     /**
      * Updates an existing task.
