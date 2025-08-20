@@ -42,11 +42,12 @@ public interface TaskController {
     /**
      * Retrieves a task by ID.
      *
+     * @param userDetails the user details
      * @param id the task identifier
      * @return {@link ResponseEntity} with task data and HTTP status 200 (OK),
      *         or status 404 (Not Found) if task doesn't exist
      */
-    ResponseEntity<TaskResponseDTO> getTaskById(UUID id);
+    ResponseEntity<TaskResponseDTO> getTaskById(CustomUserDetails userDetails, UUID id);
 
     /**
      * Retrieves all tasks.
