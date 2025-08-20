@@ -14,8 +14,11 @@ public interface CalendarEventMapper {
     @Mapping(target = "endEvent", expression = "java(LocalDateTime.parse(dto.end_event()))")
     CalendarEvent toEntity(CalendarEventRequestDTO dto);
 
+    @Mapping(target = "organizer", source = "user")
     CalendarEventResponseDTO toResponse(CalendarEvent calendarEvent);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
     void updateEventFromDto(CalendarEventUpdateDTO dto, @MappingTarget CalendarEvent calendarEvent);
 }

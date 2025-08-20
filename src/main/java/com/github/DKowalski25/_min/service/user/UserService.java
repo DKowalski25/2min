@@ -11,6 +11,7 @@ import com.github.DKowalski25._min.repository.user.UserRepository;
 
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Service interface for managing {@link User} entities.
@@ -56,7 +57,7 @@ public interface UserService {
      * @throws IllegalArgumentException if id is {@code null}
      * @throws EntityNotFoundException if no user exists with the given id
      */
-    UserResponseDTO getUserById(Integer id);
+    UserResponseDTO getUserById(UUID id);
 
     /**
      * Retrieves a user by their username.
@@ -93,7 +94,7 @@ public interface UserService {
      * @throws EntityNotFoundException if no user exists to update
      * @throws BusinessValidationException if new username or email conflicts with existing users
      */
-    void updateUser(Integer id, UserUpdateDTO userDTO);
+    UserResponseDTO updateUser(UUID id, UserUpdateDTO userDTO);
 
     /**
      * Deletes a user by their identifier.
@@ -102,5 +103,5 @@ public interface UserService {
      * @throws IllegalArgumentException if id is {@code null}
      * @throws EntityNotFoundException if no user exists with the given id
      */
-    void deleteUser(Integer id);
+    void deleteUser(UUID id);
 }

@@ -7,8 +7,8 @@
 
     <changeSet id="v1__initial_tasks" author="Dkowalski25">
         <createTable tableName="tasks">
-            <column name="id" type="BIGSERIAL" autoIncrement="true">
-                <constraints primaryKey="true"/>
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="title" type="VARCHAR(55)">
                 <constraints nullable="false"/>
@@ -20,10 +20,10 @@
                 <constraints nullable="false"/>
             </column>
             <column name="is_done" type="BOOLEAN" defaultValue="false"/>
-            <column name="time_block_id" type="BIGINT">
+            <column name="time_block_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
-            <column name="user_id" type="BIGINT">
+            <column name="user_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
         </createTable>

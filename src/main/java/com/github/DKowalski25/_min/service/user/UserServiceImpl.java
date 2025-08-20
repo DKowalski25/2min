@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,13 +43,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO getUserById(Integer id) {
+    @Transactional(readOnly = true)
+    public UserResponseDTO getUserById(UUID id) {
         return userRepository.findById(id)
                 .map(userMapper::toResponse)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResponseDTO getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .map(userMapper::toResponse)
@@ -56,6 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResponseDTO getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .map(userMapper::toResponse)
@@ -72,22 +76,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(Integer id, UserUpdateDTO userDTO) {
+    public UserResponseDTO updateUser(UUID id, UserUpdateDTO userDTO) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         userMapper.updateUserFromDto(userDTO, existingUser);
-        userRepository.save(existingUser);
+        User updatedUser =userRepository.save(existingUser);
+        return userMapper.toResponse(updatedUser);
     }
 
     @Override
     @Transactional
-    public void deleteUser(Integer id) {
+    public void deleteUser(UUID id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         userRepository.delete(user);
     }
 
+    @Transactional(readOnly = true)
     private void validateUserDoesNotExist(String username, String email) {
         if (userRepository.existsByEmail(email)) {
             throw new BusinessValidationException("Email already in use");

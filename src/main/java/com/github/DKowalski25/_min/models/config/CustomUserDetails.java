@@ -1,5 +1,6 @@
-package com.github.DKowalski25._min.models;
+package com.github.DKowalski25._min.models.config;
 
+import com.github.DKowalski25._min.models.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,13 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
     private final User user;
 
-    public Integer getId() {
+    public UUID getId() {
         return user.getId();
     }
 

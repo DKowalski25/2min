@@ -7,13 +7,13 @@
 
     <changeSet id="v1__initial_timeblock" author="Dkowalski25">
         <createTable tableName="time_blocks">
-            <column name="id" type="BIGSERIAL" autoIncrement="true">
-                <constraints primaryKey="true"/>
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="type" type="VARCHAR(5)">
                 <constraints nullable="false"/>
             </column>
-            <column name="user_id" type="BIGINT">
+            <column name="user_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
         </createTable>

@@ -1,6 +1,6 @@
 package com.github.DKowalski25._min.config.security.jwt;
 
-import com.github.DKowalski25._min.models.CustomUserDetails;
+import com.github.DKowalski25._min.models.config.CustomUserDetails;
 import com.github.DKowalski25._min.models.User;
 import com.github.DKowalski25._min.repository.user.UserRepository;
 import io.jsonwebtoken.Claims;
@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -41,7 +42,8 @@ public class JwtFilter extends OncePerRequestFilter {
             if (jwtUtil.validateToken(token)) {
                 Claims claims = jwtUtil.extractAllClaims(token);
                 String username = claims.getSubject();
-                Integer userId = claims.get("userId", Integer.class);
+                String userIdStr = claims.get("userId", String.class);
+                UUID userId = UUID.fromString(userIdStr);
 
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     User user = userRepository.findById(userId)

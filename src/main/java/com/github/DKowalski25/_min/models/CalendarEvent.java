@@ -3,8 +3,10 @@ package com.github.DKowalski25._min.models;
 import jakarta.persistence.*;
 
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "calendar_events")
@@ -16,9 +18,10 @@ import java.time.LocalDateTime;
 @ToString(exclude = "user")
 public class CalendarEvent {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @GeneratedValue(generator = "UUID")
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     @Column(name = "title", nullable = false)
     private String title;
