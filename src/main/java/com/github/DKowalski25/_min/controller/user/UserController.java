@@ -84,7 +84,7 @@ public interface UserController {
      * @return {@link ResponseEntity} with HTTP status 204 (No Content) if successful,
      *         or status 404 (Not Found) if user doesn't exist
      */
-    ResponseEntity<Void> updateUser(CustomUserDetails userDetails, UserUpdateDTO userDto);
+    ResponseEntity<UserResponseDTO> updateUser(CustomUserDetails userDetails, UserUpdateDTO userDto);
 
     /**
      * Deletes a user by ID.

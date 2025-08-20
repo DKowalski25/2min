@@ -72,11 +72,10 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @PatchMapping("/me")
-    public ResponseEntity<Void> updateUser(
+    public ResponseEntity<UserResponseDTO> updateUser(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody @Valid UserUpdateDTO userDto) {
-        userService.updateUser(userDetails.getId(), userDto);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(userService.updateUser(userDetails.getId(), userDto));
 
     }
 
