@@ -15,15 +15,15 @@ public interface TaskMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "done", constant = "false")
-    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
-    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
-    Task toEntity(TaskRequestDTO dto, UUID userId);
+    @Mapping(target = "timeBlock", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    Task toEntity(TaskRequestDTO dto);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "done", constant = "false")
-    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
-    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
-    Task toEntityWithUser(TaskRequestDTO dto, UUID userId);
+//    @Mapping(target = "id", ignore = true)
+//    @Mapping(target = "done", constant = "false")
+//    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
+//    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
+//    Task toEntityWithUser(TaskRequestDTO dto, UUID userId);
 
     @Mapping(target = "timeBlockType", source = "timeBlock.type")
     @Mapping(target = "userId", source = "user.id")
