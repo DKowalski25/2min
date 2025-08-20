@@ -41,6 +41,13 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok(userResponseDTO);
 
     }
+// TODO: for admin
+//    @Override
+//    @GetMapping("/{id}")
+//    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable UUID id) {
+//        UserResponseDTO user = userService.getUserById(id);
+//        return ResponseEntity.ok(user);
+//    }
 
     @Override
     @GetMapping("/username/{username}")
