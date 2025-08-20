@@ -25,5 +25,8 @@ public interface UserMapper {
     UserRequestDTO toRequest(User user);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "tasks", ignore = true)
+    @Mapping(target = "timeBlocks", ignore = true)
     void updateUserFromDto(UserUpdateDTO dto, @MappingTarget User user);
 }
