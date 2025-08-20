@@ -36,8 +36,10 @@ public class TaskControllerImpl implements TaskController {
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable UUID id) {
-        return ResponseEntity.ok(taskService.getTaskById(id));
+    public ResponseEntity<TaskResponseDTO> getTaskById(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable UUID id) {
+        return ResponseEntity.ok(taskService.getTaskById(id, userDetails.getId()));
     }
 
     @Override
