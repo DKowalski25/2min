@@ -13,3 +13,16 @@ docker rmi -f $(docker images -aq)
 
 Очистить кеш сборки Docker
 docker builder prune -af
+
+
+# Все тесты
+./gradlew test
+
+# Только unit тесты
+./gradlew unitTest
+
+# Только интеграционные тесты
+./gradlew integrationTest
+
+# С конкретным профилем
+./gradlew test -Dspring.profiles.active=test

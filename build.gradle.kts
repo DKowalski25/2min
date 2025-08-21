@@ -42,8 +42,40 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.mockito:mockito-core")
+    testImplementation("org.mockito:mockito-junit-jupiter")
+    testImplementation("com.h2database:h2")
 }
 
 tasks.withType<BootJar> {
     mainClass.set("com.github.DKowalski25._min.Application")
+}
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+    systemProperty("spring.profiles.active", "test")
+}
+
+// Для запуска конкретных типов тестов
+task<Test>("unitTest") {
+    useJUnitPlatform()
+    filter {
+        includeTestsMatching("*UnitTest")
+    }
+    systemProperty("spring.profiles.active", "unit-test")
+}
+
+task<Test>("integrationTest") {
+    useJUnitPlatform()
+    filter {
+        includeTestsMatching("*IntegrationTest")
+    }
+    systemProperty("spring.profiles.active", "test")
 }

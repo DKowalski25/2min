@@ -1,0 +1,158 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  # Database configuration for Testcontainers
+  datasource:
+    url: jdbc:tc:postgresql:15-alpine:///testdb?TC_TMPFS=/testtmpfs:rw
+    username: test
+    password: test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+
+  # JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        show_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    open-in-view: false
+
+  # SQL logging
+  sql:
+    init:
+      mode: never
+
+  # Jackson configuration to avoid infinite recursion
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+
+  # Security (disable for testing)
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          enabled: false
+
+  # Web configuration
+  web:
+    resources:
+      add-mappings: false
+
+  # Server configuration
+  server:
+    port: 0  # Random port for tests
+    servlet:
+      context-path: /
+
+  # Logging configuration
+  logging:
+    level:
+      com.github.DKowalski25._min: DEBUG
+      org.springframework: WARN
+      org.hibernate: WARN
+      org.hibernate.SQL: DEBUG
+      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+      org.testcontainers: INFO
+      org.testcontainers.containers.PostgreSQLContainer: INFO
+    pattern:
+      console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+  # Test-specific properties
+  test:
+    database:
+      reuse: true  # Reuse containers between tests when possible
+
+# Testcontainers configuration
+testcontainers:
+  enabled: true
+  reuse:
+    enable: true
+  containers:
+    postgres:
+      image: postgres:15-alpine
+      environment:
+        POSTGRES_DB: testdb
+        POSTGRES_USER: test
+        POSTGRES_PASSWORD: test
+      labels:
+        testcontainer: postgres
+      tmpfs:
+        - /testtmpfs:rw
+      wait:
+        timeout: 120s
+      options:
+        - --max_connections=100
+
+# Application specific test properties
+app:
+  jwt:
+    secret: test-secret-key-1234567890-abcdefghijklmnopqrstuvwxyz
+    expiration: 86400000  # 24 hours
+  security:
+    enabled: false  # Disable security for easier testing
+
+# Flyway (disable for tests)
+flyway:
+  enabled: false
+
+# Liquibase (disable for tests)
+liquibase:
+  enabled: false
+
+# Actuator (disable for tests)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
+    info:
+      enabled: true
+
+# Cache configuration
+cache:
+  type: none
+
+# Message properties
+messages:
+  basename: messages
+  encoding: UTF-8
+
+# Multipart configuration
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# Async configuration
+task:
+  execution:
+    pool:
+      core-size: 2
+      max-size: 5
+      queue-capacity: 100
+    thread-name-prefix: test-task-
+  scheduling:
+    thread-name-prefix: test-scheduling-
+
+# Email (disable for tests)
+mail:
+  enabled: false
+
+# Validation
+validation:
+  enabled: true

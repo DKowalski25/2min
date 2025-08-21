@@ -16,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = {"tasks", "user"})
+@Builder
 public class TimeBlock {
     @Id
     @GeneratedValue(generator = "UUID")

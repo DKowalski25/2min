@@ -16,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "user")
+@Builder
 public class CalendarEvent {
     @Id
     @GeneratedValue(generator = "UUID")
