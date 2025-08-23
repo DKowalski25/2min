@@ -15,15 +15,12 @@ public interface TaskMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "done", constant = "false")
+    @Mapping(target = "archivedAt", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "periodMarker", ignore = true)
     @Mapping(target = "timeBlock", ignore = true)
     @Mapping(target = "user", ignore = true)
     Task toEntity(TaskRequestDTO dto);
-
-//    @Mapping(target = "id", ignore = true)
-//    @Mapping(target = "done", constant = "false")
-//    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
-//    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
-//    Task toEntityWithUser(TaskRequestDTO dto, UUID userId);
 
     @Mapping(target = "timeBlockType", source = "timeBlock.type")
     @Mapping(target = "userId", source = "user.id")
@@ -33,6 +30,9 @@ public interface TaskMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "timeBlock", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "archivedAt", ignore = true)
+    @Mapping(target = "periodMarker", ignore = true)
     void updateFromDto(TaskUpdateDTO dto, @MappingTarget Task task);
 
 
