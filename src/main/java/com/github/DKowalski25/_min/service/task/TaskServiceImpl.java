@@ -42,12 +42,18 @@ public class TaskServiceImpl implements TaskService {
             throw new AccessDeniedException("You don't have permission to create this task");
         }
 
+        boolean plannedForNext = Boolean.TRUE.equals(taskRequestDTO.plannedForNext());
+
         Task task = taskMapper.toEntity(taskRequestDTO);
         task.setUser(user);
         task.setTimeBlock(timeBlock);
+        task.setPlannedForNext(plannedForNext);
+        task.setPeriodMarker(generatePeriodMarker(timeBlock.getType(), plannedForNext));
+
         Task saved = taskRepository.save(task);
         return taskMapper.toResponse(saved);
     }
+
 
     @Override
     @Transactional(readOnly = true)
