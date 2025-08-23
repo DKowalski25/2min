@@ -37,6 +37,8 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.toEntity(userDTO);
         user.setPassword(passwordEncoder.encode(userDTO.password()));
+        user.setHistoryRetention(HistoryRetention.MONTH);
+
         User savedUser = userRepository.save(user);
         timeBlockService.createDefaultTimeBlocks(savedUser);
         return userMapper.toResponse(savedUser);
