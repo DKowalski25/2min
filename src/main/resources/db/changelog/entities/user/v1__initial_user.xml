@@ -23,6 +23,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="is_blocked" type="BOOLEAN" defaultValue="false"/>
+            <column name="history_retention" type="VARCHAR(20)" defaultValue="MONTH" />
         </createTable>
     </changeSet>
 </databaseChangeLog>
