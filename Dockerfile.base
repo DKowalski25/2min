@@ -1,5 +1,21 @@
 FROM eclipse-temurin:17-jdk
 
-RUN apt-get update && apt-get install -y unzip && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y unzip curl && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+
+# Укажем версию Gradle
+ARG GRADLE_VERSION=8.7
+ENV GRADLE_HOME=/opt/gradle
+
+# Скачиваем и распаковываем Gradle
+RUN curl -sLo gradle.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
+    && unzip gradle.zip -d /opt \
+    && rm gradle.zip \
+    && mv /opt/gradle-${GRADLE_VERSION} ${GRADLE_HOME}
+
+# Чтобы gradle был доступен в PATH
+ENV PATH="${GRADLE_HOME}/bin:${PATH}"
+
+# Проверяем установку
+RUN gradle --version

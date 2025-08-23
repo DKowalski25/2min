@@ -6,5 +6,6 @@ public record TaskUpdateDTO(
         String title,
         String description,
         Tag tag,
+        Boolean plannedForNext,
         Boolean done
 ) {}

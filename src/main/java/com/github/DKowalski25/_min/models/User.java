@@ -39,6 +39,10 @@ public class User {
     @Column(name = "is_blocked")
     private boolean blocked;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "history_retention")
+    private HistoryRetention historyRetention = HistoryRetention.MONTH;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> tasks = new ArrayList<>();
 

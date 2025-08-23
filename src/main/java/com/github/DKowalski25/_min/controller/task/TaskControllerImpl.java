@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,9 +46,25 @@ public class TaskControllerImpl implements TaskController {
     @Override
     @GetMapping
     public ResponseEntity<List<TaskResponseDTO>> getAllTasks(
-            @AuthenticationPrincipal CustomUserDetails userDetails
-    ) {
-        return ResponseEntity.ok(taskService.getAllTasks(userDetails.getId()));
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestParam(required = false) Boolean includeHistory) {
+        return ResponseEntity.ok(taskService.getTasks(userDetails.getId(), includeHistory));
+    }
+
+    @Override
+    @GetMapping("/planned")
+    public ResponseEntity<List<TaskResponseDTO>> getPlannedTasks(
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        return ResponseEntity.ok(taskService.getPlannedForNextTasks(userDetails.getId()));
+    }
+
+    @Override
+    public ResponseEntity<Void> cleanHistory(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestParam(required = false) Integer days) {
+        LocalDateTime olderThan = days != null ? LocalDateTime.now().minusDays(days) : null;
+        taskService.cleanHistory(userDetails.getId(), olderThan);
+        return ResponseEntity.noContent().build();
     }
 
     @Override

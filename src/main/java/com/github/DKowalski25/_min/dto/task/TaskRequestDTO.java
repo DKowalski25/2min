@@ -22,5 +22,7 @@ public record TaskRequestDTO(
     Tag tag,
 
     @NotNull
-    UUID timeBlockId
+    UUID timeBlockId,
+
+    Boolean plannedForNext
 ) {}

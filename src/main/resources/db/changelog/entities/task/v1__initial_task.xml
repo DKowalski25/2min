@@ -20,6 +20,10 @@
                 <constraints nullable="false"/>
             </column>
             <column name="is_done" type="BOOLEAN" defaultValue="false"/>
+            <column name="is_planned_for_next" type="BOOLEAN" defaultValue="false"/>
+            <column name="archived_at" type="TIMESTAMP"/>
+            <column name="period_marker" type="VARCHAR(50)"/>
+            <column name="created_at" type="TIMESTAMP"/>
             <column name="time_block_id" type="UUID">
                 <constraints nullable="false"/>
             </column>

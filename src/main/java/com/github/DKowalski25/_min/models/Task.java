@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -33,6 +34,19 @@ public class Task {
     @Column(name = "is_done")
     private boolean done;
 
+    @Column(name = "is_planned_for_next")
+    private boolean plannedForNext = false;
+
+    @Column(name = "archived_at")
+    private LocalDateTime archivedAt;
+
+    @Column(name = "period_marker")
+    private String periodMarker;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+
     @ManyToOne
     @JoinColumn(
             name = "time_block_id",
@@ -46,4 +60,11 @@ public class Task {
             nullable = false
     )
     private User user;
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+    }
 }

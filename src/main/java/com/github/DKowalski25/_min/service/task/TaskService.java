@@ -7,6 +7,7 @@ import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 import com.github.DKowalski25._min.repository.task.TaskRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,13 +53,11 @@ public interface TaskService {
      */
     TaskResponseDTO getTaskById(UUID id, UUID userId);
 
-    /**
-     * Retrieves all available tasks.
-     *
-     * @param userId the ID of the user
-     * @return a list of task response DTOs (possibly empty)
-     */
-    List<TaskResponseDTO> getAllTasks(UUID userId);
+    List<TaskResponseDTO> getTasks(UUID userId, Boolean includeHistory);
+
+    List<TaskResponseDTO> getPlannedForNextTasks(UUID userId);
+
+    void cleanHistory(UUID userId, LocalDateTime orderThan);
 
     /**
      * Updates an existing task with the provided data.

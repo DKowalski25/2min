@@ -55,7 +55,11 @@ public interface TaskController {
      * @return {@link ResponseEntity} with list of all tasks and HTTP status 200 (OK),
      *         or empty list if no tasks exist
      */
-    ResponseEntity<List<TaskResponseDTO>> getAllTasks(CustomUserDetails userDetails);
+    ResponseEntity<List<TaskResponseDTO>> getAllTasks(CustomUserDetails userDetails, Boolean includeHistory);
+
+    ResponseEntity<List<TaskResponseDTO>> getPlannedTasks(CustomUserDetails userDetails);
+
+    ResponseEntity<Void> cleanHistory(CustomUserDetails userDetails, Integer days);
 
     /**
      * Updates an existing task.
