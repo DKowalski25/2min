@@ -6,6 +6,7 @@ import com.github.DKowalski25._min.dto.user.UserResponseDTO;
 import com.github.DKowalski25._min.dto.user.UserUpdateDTO;
 import com.github.DKowalski25._min.exceptions.BusinessValidationException;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
+import com.github.DKowalski25._min.models.HistoryRetention;
 import com.github.DKowalski25._min.models.User;
 import com.github.DKowalski25._min.repository.user.UserRepository;
 import com.github.DKowalski25._min.service.timeblock.TimeBlockService;
@@ -83,7 +84,12 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         userMapper.updateUserFromDto(userDTO, existingUser);
-        User updatedUser =userRepository.save(existingUser);
+
+        if (userDTO.password() != null && !userDTO.password().isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(userDTO.password()));
+        }
+
+        User updatedUser = userRepository.save(existingUser);
         return userMapper.toResponse(updatedUser);
     }
 
@@ -95,7 +101,6 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
-    @Transactional(readOnly = true)
     private void validateUserDoesNotExist(String username, String email) {
         if (userRepository.existsByEmail(email)) {
             throw new BusinessValidationException("Email already in use");
