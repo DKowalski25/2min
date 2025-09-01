@@ -3,15 +3,13 @@ package com.github.DKowalski25._min.controller.task;
 import com.github.DKowalski25._min.dto.task.TaskRequestDTO;
 import com.github.DKowalski25._min.dto.task.TaskResponseDTO;
 import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
-
-import com.github.DKowalski25._min.models.CustomUserDetails;
+import com.github.DKowalski25._min.models.config.CustomUserDetails;
 import com.github.DKowalski25._min.repository.task.TaskRepository;
+
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.UUID;
 
 /**
  * REST controller for managing task operations.
@@ -39,20 +37,17 @@ public interface TaskController {
      * @param taskRequestDTO the task creation data (must not be {@code null})
      * @return {@link ResponseEntity} with created task data and HTTP status 201 (Created)
      */
-    @PostMapping
-    ResponseEntity<TaskResponseDTO> createTask(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestBody TaskRequestDTO taskRequestDTO);
+    ResponseEntity<TaskResponseDTO> createTask(CustomUserDetails userDetails, TaskRequestDTO taskRequestDTO);
 
     /**
      * Retrieves a task by ID.
      *
+     * @param userDetails the user details
      * @param id the task identifier
      * @return {@link ResponseEntity} with task data and HTTP status 200 (OK),
      *         or status 404 (Not Found) if task doesn't exist
      */
-    @GetMapping("/{id}")
-    ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable int id);
+    ResponseEntity<TaskResponseDTO> getTaskById(CustomUserDetails userDetails, UUID id);
 
     /**
      * Retrieves all tasks.
@@ -60,10 +55,11 @@ public interface TaskController {
      * @return {@link ResponseEntity} with list of all tasks and HTTP status 200 (OK),
      *         or empty list if no tasks exist
      */
-    @GetMapping
-    ResponseEntity<List<TaskResponseDTO>> getAllTasks(
-            @AuthenticationPrincipal CustomUserDetails userDetails
-    );
+    ResponseEntity<List<TaskResponseDTO>> getAllTasks(CustomUserDetails userDetails, Boolean includeHistory);
+
+    ResponseEntity<List<TaskResponseDTO>> getPlannedTasks(CustomUserDetails userDetails);
+
+    ResponseEntity<Void> cleanHistory(CustomUserDetails userDetails, Integer days);
 
     /**
      * Updates an existing task.
@@ -73,11 +69,7 @@ public interface TaskController {
      * @return {@link ResponseEntity} with updated task data and HTTP status 200 (OK),
      *         or status 404 (Not Found) if task doesn't exist
      */
-    @PatchMapping("/{id}")
-    ResponseEntity<TaskResponseDTO> updateTask(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable int id,
-            @RequestBody TaskUpdateDTO taskRequestDTO);
+    ResponseEntity<TaskResponseDTO> updateTask(CustomUserDetails userDetails, UUID id, TaskUpdateDTO taskRequestDTO);
 
     /**
      * Deletes a task by ID.
@@ -86,8 +78,5 @@ public interface TaskController {
      * @return {@link ResponseEntity} with HTTP status 204 (No Content) if successful,
      *         or status 404 (Not Found) if task doesn't exist
      */
-    @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteTask(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable int id);
+    ResponseEntity<Void> deleteTask(CustomUserDetails userDetails, UUID id);
 }

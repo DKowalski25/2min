@@ -5,7 +5,7 @@ import com.github.DKowalski25._min.dto.auth.LoginRequest;
 import com.github.DKowalski25._min.dto.user.UserMapper;
 import com.github.DKowalski25._min.dto.user.UserRequestDTO;
 import com.github.DKowalski25._min.dto.user.UserResponseDTO;
-import com.github.DKowalski25._min.models.CustomUserDetails;
+import com.github.DKowalski25._min.models.config.CustomUserDetails;
 import com.github.DKowalski25._min.models.User;
 import com.github.DKowalski25._min.service.user.UserService;
 
@@ -20,11 +20,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 
 
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/auth")
 public class AuthControllerImpl implements AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -33,6 +36,7 @@ public class AuthControllerImpl implements AuthController {
     private final UserMapper userMapper;
 
     @Override
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
         try {
             Authentication authentication = authenticationManager.authenticate(
@@ -52,6 +56,7 @@ public class AuthControllerImpl implements AuthController {
     }
 
     @Override
+    @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> register(@RequestBody @Valid UserRequestDTO dto) {
         return ResponseEntity.status(201).body(userService.createUser(dto));
     }

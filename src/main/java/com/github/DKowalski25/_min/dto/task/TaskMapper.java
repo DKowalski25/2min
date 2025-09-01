@@ -7,21 +7,20 @@ import com.github.DKowalski25._min.models.User;
 
 import org.mapstruct.*;
 
+import java.util.UUID;
+
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface TaskMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "done", constant = "false")
-    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
-    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
-    Task toEntity(TaskRequestDTO dto, int userId);
-
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "done", constant = "false")
-    @Mapping(target = "timeBlock", source = "dto.timeBlockId", qualifiedByName = "mapTimeBlock")
-    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUser")
-    Task toEntityWithUser(TaskRequestDTO dto, int userId);
+    @Mapping(target = "archivedAt", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "periodMarker", ignore = true)
+    @Mapping(target = "timeBlock", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    Task toEntity(TaskRequestDTO dto);
 
     @Mapping(target = "timeBlockType", source = "timeBlock.type")
     @Mapping(target = "userId", source = "user.id")
@@ -31,18 +30,21 @@ public interface TaskMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "timeBlock", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "archivedAt", ignore = true)
+    @Mapping(target = "periodMarker", ignore = true)
     void updateFromDto(TaskUpdateDTO dto, @MappingTarget Task task);
 
 
     @Named("mapUser")
-    default User mapUser(int userId) {
+    default User mapUser(UUID userId) {
         User user = new User();
         user.setId(userId);
         return user;
     }
 
     @Named("mapTimeBlock")
-    default TimeBlock mapTimeBlock(Integer timeBlockId) {
+    default TimeBlock mapTimeBlock(UUID timeBlockId) {
         TimeBlock block = new TimeBlock();
         block.setId(timeBlockId);
         return block;

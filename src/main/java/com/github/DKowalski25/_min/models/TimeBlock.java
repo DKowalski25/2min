@@ -1,21 +1,27 @@
 package com.github.DKowalski25._min.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "time_blocks")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"tasks", "user"})
 public class TimeBlock {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(generator = "UUID")
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(
@@ -29,5 +35,5 @@ public class TimeBlock {
     private TimeType type;
 
     @OneToMany(mappedBy = "timeBlock", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 }

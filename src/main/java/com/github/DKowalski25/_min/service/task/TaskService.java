@@ -7,7 +7,9 @@ import com.github.DKowalski25._min.dto.task.TaskUpdateDTO;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
 import com.github.DKowalski25._min.repository.task.TaskRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Service interface for task management operations.
@@ -40,7 +42,7 @@ public interface TaskService {
      * @return the created task response DTO
      * @throws IllegalArgumentException if the request data is invalid
      */
-    TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO, int userId);
+    TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO, UUID userId);
 
     /**
      * Retrieves a task by its unique identifier.
@@ -49,15 +51,13 @@ public interface TaskService {
      * @return the task response DTO
      * @throws EntityNotFoundException if no task exists with the given ID
      */
-    TaskResponseDTO getTaskById(int id);
+    TaskResponseDTO getTaskById(UUID id, UUID userId);
 
-    /**
-     * Retrieves all available tasks.
-     *
-     * @param userId the ID of the user
-     * @return a list of task response DTOs (possibly empty)
-     */
-    List<TaskResponseDTO> getAllTasks(int userId);
+    List<TaskResponseDTO> getTasks(UUID userId, Boolean includeHistory);
+
+    List<TaskResponseDTO> getPlannedForNextTasks(UUID userId);
+
+    void cleanHistory(UUID userId, LocalDateTime orderThan);
 
     /**
      * Updates an existing task with the provided data.
@@ -69,7 +69,7 @@ public interface TaskService {
      * @throws EntityNotFoundException if no task exists with the given ID
      * @throws IllegalArgumentException if the update data is invalid
      */
-    TaskResponseDTO updateTask(int id, TaskUpdateDTO taskUpdateDTO, int userId);
+    TaskResponseDTO updateTask(UUID id, TaskUpdateDTO taskUpdateDTO, UUID userId);
 
     /**
      * Deletes a task by its identifier.
@@ -78,5 +78,5 @@ public interface TaskService {
      * @param userId the ID of the user
      * @throws EntityNotFoundException if no task exists with the given ID
      */
-    void deleteTask(int id, int userId);
+    void deleteTask(UUID id, UUID userId);
 }

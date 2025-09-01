@@ -2,4 +2,6 @@ package com.github.DKowalski25._min.dto.taskblock;
 
 import com.github.DKowalski25._min.models.TimeType;
 
-public record TimeBlockResponseDTO(Integer id, TimeType type) {}
+import java.util.UUID;
+
+public record TimeBlockResponseDTO(UUID id, TimeType type) {}

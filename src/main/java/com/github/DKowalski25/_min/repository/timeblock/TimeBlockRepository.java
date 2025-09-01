@@ -6,11 +6,16 @@ import com.github.DKowalski25._min.dto.taskblock.TimeBlockUpdateDTO;
 import com.github.DKowalski25._min.models.TimeBlock;
 import com.github.DKowalski25._min.models.TimeType;
 
+import com.github.DKowalski25._min.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Spring Data JPA repository for {@link TimeBlock} entities management.
@@ -31,21 +36,29 @@ import java.util.Optional;
  * @see TimeBlockUpdateDTO
  */
 @Repository
-public interface TimeBlockRepository extends JpaRepository<TimeBlock, Integer> {
+public interface TimeBlockRepository extends JpaRepository<TimeBlock, UUID> {
 
-    /**
-     * Finds a time block by its type.
-     *
-     * @param type the time block type to search for (must not be {@code null})
-     * @return an {@link Optional} containing the found time block or empty if none exists
-     */
-    Optional<TimeBlock> findByType(TimeType type);
+    //    List<TimeBlock> findByUser(User user);
+//
+//    Optional<TimeBlock> findByUserAndType(User user, TimeType type);
+//    /**
+//     * Finds a time block by its type.
+//     *
+//     * @param type the time block type to search for (must not be {@code null})
+//     * @return an {@link Optional} containing the found time block or empty if none exists
+//     */
+//    Optional<TimeBlock> findByType(TimeType type);
+//
+//
+//    /**
+//     * Checks whether a time block exists with the given type.
+//     *
+//     * @param type the time block type to check (must not be {@code null})
+//     * @return {@code true} if a time block exists, {@code false} otherwise
+//     */
+//    boolean existsByType(TimeType type);
+//
+//    @Query("SELECT tb FROM TimeBlock tb WHERE tb.user = :user AND tb.type = :type")
+//    Optional<TimeBlock> findByUserAndTypeQuery(@Param("user") User user, @Param("type") TimeType type);
 
-    /**
-     * Checks whether a time block exists with the given type.
-     *
-     * @param type the time block type to check (must not be {@code null})
-     * @return {@code true} if a time block exists, {@code false} otherwise
-     */
-    boolean existsByType(TimeType type);
 }

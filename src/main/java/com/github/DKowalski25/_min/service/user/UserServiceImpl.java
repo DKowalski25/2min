@@ -6,6 +6,7 @@ import com.github.DKowalski25._min.dto.user.UserResponseDTO;
 import com.github.DKowalski25._min.dto.user.UserUpdateDTO;
 import com.github.DKowalski25._min.exceptions.BusinessValidationException;
 import com.github.DKowalski25._min.exceptions.EntityNotFoundException;
+import com.github.DKowalski25._min.models.HistoryRetention;
 import com.github.DKowalski25._min.models.User;
 import com.github.DKowalski25._min.repository.user.UserRepository;
 import com.github.DKowalski25._min.service.timeblock.TimeBlockService;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,19 +38,23 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.toEntity(userDTO);
         user.setPassword(passwordEncoder.encode(userDTO.password()));
+        user.setHistoryRetention(HistoryRetention.MONTH);
+
         User savedUser = userRepository.save(user);
         timeBlockService.createDefaultTimeBlocks(savedUser);
         return userMapper.toResponse(savedUser);
     }
 
     @Override
-    public UserResponseDTO getUserById(Integer id) {
+    @Transactional(readOnly = true)
+    public UserResponseDTO getUserById(UUID id) {
         return userRepository.findById(id)
                 .map(userMapper::toResponse)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResponseDTO getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .map(userMapper::toResponse)
@@ -56,6 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResponseDTO getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .map(userMapper::toResponse)
@@ -72,17 +79,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(Integer id, UserUpdateDTO userDTO) {
+    public UserResponseDTO updateUser(UUID id, UserUpdateDTO userDTO) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         userMapper.updateUserFromDto(userDTO, existingUser);
-        userRepository.save(existingUser);
+
+        if (userDTO.password() != null && !userDTO.password().isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(userDTO.password()));
+        }
+
+        User updatedUser = userRepository.save(existingUser);
+        return userMapper.toResponse(updatedUser);
     }
 
     @Override
     @Transactional
-    public void deleteUser(Integer id) {
+    public void deleteUser(UUID id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         userRepository.delete(user);
